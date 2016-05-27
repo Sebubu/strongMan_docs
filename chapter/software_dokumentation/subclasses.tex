@@ -1,0 +1,90 @@
+\subsection{Subklassen}
+\subsubsection{Ausgangslage}
+Um die diversen Authentiserungsmethoden sowohl in der Datenbank, wie auch in unseren Models widerzuspiegeln, setzen wir auf Vererbung. Wird in Django Vererbung beim Models eingesetzt wird standardmässig "Multi-table inheritance" verwendet, dass heisst es gibt für jede Subklasse eine weiter Tabelle in der Datenbank.
+
+\subsubsection{Beispiel Vererbung}
+Beispiel Code in Django um die Vererbung zu demonstrieren.
+\medskip
+\begin{python}
+from django.db import models
+
+class Authentication(models.Model):
+    name = models.TextField()
+    round = models.IntegerField(default=1)
+
+class EapAuthentication(Authentication):
+    eap_id = models.TextField()
+\end{python}
+
+\medskip
+Dies führt zu folgenden Tabellen in der Datenbank:
+\medskip
+
+\begin{table}[H]
+	\centering
+    \begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|}
+    \hline    
+    \rowcolor{lightblue}
+	id & name & round \\ \hline   
+	1 & eap home & 1 \\ \hline
+	2 & cert work & 1 \\ \hline
+    \end{tabular}
+    \caption[Authentication]{Authentication}
+\end{table}
+\medskip \medskip
+\begin{table}[H]
+	\centering
+    \begin{tabular}{|p{4.5cm}|p{4.5cm}|}
+    \hline    
+    \rowcolor{lightblue}
+	authentication\_ptr\_id & eap\_id \\ \hline   
+	1 & eap-home-id  \\ \hline
+    \end{tabular}
+    \caption[EapAuthentication]{EapAuthentication}
+\end{table}
+\medskip
+
+\subsubsection{Problematik}
+Nun wird bei Request vom Frontend an das Backend oft nur die \textbf{id} des Models übermittelt.\\
+Dies könnte wie folgt aussehen:
+\medskip
+\begin{python}
+def update(request, id):
+    authentication = Authentication.objects.get(id=id)
+    ...
+\end{python}
+\medskip
+Wie erwartet ist das Objekt \textbf{authentication} vom Typ Authentication. Falls hinter dieser \textbf{id} jedoch noch eine Spezialisierung stecken würde, sieht man dies dem Objekt nicht an.
+\subsubsection{Lösungsansatz}
+Die Lösung für dieses Problem bietet Django selbst leider nicht an. Jedoch ist eine elegante Möglichkeit die Spezialisierung des Objektes über Reflection zu lösen. Dazu implementieren wir in den Basisklassen die Methode \textbf{subclass()}.\\
+Diese ermöglicht es für jede Subklasse der Basisklasse zu testen, ob das aktuelle Objekt eine Spezialisierung ist oder nicht, falls ja, wird ein neue spezialisierte Instanz erstellt und zurück gegeben.
+\medskip
+\begin{python}
+class Authentication(models.Model):
+	...
+	
+    @classmethod
+    def get_types(cls):
+        subclasses = [subclass() for subclass in cls.__subclasses__()]
+        return [subclass.get_typ() for subclass in subclasses]	
+	
+    def subclass(self):
+        for cls in self.get_types():
+            authentication_class = getattr(sys.modules[__name__], cls)
+            authentication = authentication_class.objects.filter(id=self.id)
+            if authentication:
+                return authentication.first()
+        return self
+\end{python}
+\medskip
+Mit Hilfe dieser Erweiterung sieht das verbesserte obig Beispiel nun folgendermassen aus.
+\medskip
+\begin{python}
+def update(request, id):
+    authentication = Authentication.objects.get(id=id).subclass()
+    ...
+\end{python}
+\medskip
+Der Typ des \textbf{authentication} Objektes entspricht nun der gewünschten Subklasse.
+
+\newpage

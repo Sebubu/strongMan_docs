@@ -1,0 +1,67 @@
+\section{setup.py}
+Die Datei 'setup.py' im Hauptverzeichnis des Projekts stellt das Installationsskript für strongMan dar. Zusätzlich enthält es noch einen migrate Befehl für das automatische Migrieren der Datenbank.
+
+\begin{lstlisting}[style=BashInputStyle]
+	 ./setup.py <command> [options]
+\end{lstlisting}
+
+\begin{itemize}
+	\item -v | --verbose
+	\begin{itemize}
+	    \item Setzt die Ausgabe von setup.py auf verbose.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{install}
+\begin{lstlisting}[style=BashInputStyle]
+	 ./setup.py install [-p %python-interpreter%]
+\end{lstlisting}
+Macht strongMan bereit zur Ausführung. Richtet ein Python Virtualenv ein, installiert alle Requirements, migriert die Datenbank und kopiert alle statischen Dateien in einen Ordner.
+\begin{itemize}
+	\item -p | --python %python-interpreter%
+	\begin{itemize}
+	    \item Wähle einen spezifischen Python Interpreter für strongMan
+	    \item Python3 wird als Standartwert genutzt, wenn nichts angegeben.
+	\end{itemize}
+\end{itemize}
+
+\subsubsection{uninstall}
+\begin{lstlisting}[style=BashInputStyle]
+	 ./setup.py uninstall
+\end{lstlisting}
+Versetzt die strongMan Applikation in den gleichen Zustand wie vor der Installation. Entfernt das Virtualenv und löscht die statischen Dateien.
+
+\subsubsection{add-service}
+\begin{lstlisting}[style=BashInputStyle]
+	 sudo ./setup.py add-service
+\end{lstlisting}
+Fügt einen Systemd service für strongMan hinzu. Der Service ist zu Beginn gestoppt und disabled.\\
+
+Starte den Service mit folgendem Befehl:
+\begin{lstlisting}[style=BashInputStyle]
+	 sudo systemctl start strongMan.service
+\end{lstlisting}
+
+Lasse den Service automatisch starten beim Systemstart:
+\begin{lstlisting}[style=BashInputStyle]
+	 sudo systemctl enable strongMan.service
+\end{lstlisting}
+Es werden Root Rechte benötigt, um Änderungen am Systemd zu machen.
+
+\subsubsection{remove-service}
+\begin{lstlisting}[style=BashInputStyle]
+	 sudo ./setup.py remove-service
+\end{lstlisting}
+Entfernt den Systemd Service.
+
+\subsubsection{migrate}
+\begin{lstlisting}[style=BashInputStyle]
+	 ./setup.py migrate [-dm]
+\end{lstlisting}
+Migriert die Django Datenbank, wenn Änderungen vorhanden sind. Siehe Django Migrations\footnote{\url{https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici}}.
+\begin{itemize}
+	\item -dm | --delete-migrations
+	\begin{itemize}
+	    \item Löscht alle alten Migrationsskripte und die Sqlite Datenbank.
+	\end{itemize}
+\end{itemize}

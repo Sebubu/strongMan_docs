@@ -1,0 +1,45 @@
+\section{Benutzerhandbuch}
+
+\section{Installation}
+\subsubsection{Anforderungen}
+\begin{itemize}
+	\item strongSwan mit Vici plugin (>= v5.4.0)
+	\item python3 =<
+	\item pip3 =<
+	\item git
+	\item virtualenv
+\end{itemize}
+\subsubsection{Installation}
+\begin{lstlisting}[style=BashInputStyle]
+	 git clone https://github.com/Sebubu/strongMan.git
+	 cd strongMan
+	 ./setup.py install
+\end{lstlisting}
+
+\subsubsection{Starten}
+\begin{lstlisting}[style=BashInputStyle]
+	 ./run.py
+\end{lstlisting}
+
+\subsubsection{Systemd Service hinzufügen (Optional)}
+Füge einen Systemd Service hinzu, der strongMan bei jedem Systemstart automatisch startet.
+\begin{lstlisting}[style=BashInputStyle]
+    sudo ./setup.py add-service # Adds the service
+    sudo systemctl enable strongMan.service
+    sudo systemctl start strongMan.service
+\end{lstlisting}
+
+\subsection{Deinstallation}
+\subsubsection{Systemd Service entfernen (Optional)}
+Entferne den Systemd Service, wenn installiert.
+\begin{lstlisting}[style=BashInputStyle]
+    sudo ./setup.py remove-service
+\end{lstlisting}
+
+\subsubsection{Entferne Programmordner}
+Der Programmordner kann einfach gelöscht werden.
+\begin{lstlisting}[style=BashInputStyle]
+    rm -rf strongMan/
+\end{lstlisting}
+
+\subsection{strongMan Features}

@@ -1,0 +1,174 @@
+\section{Authentiserungsmethoden}
+Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind enorm, damit das Erfassen der Verbindungsdaten nicht all zu unübersichtlich wird, beschränken wir uns auf die häufigst verwendeten Szenarien. Namentlich:
+
+\begin{enumerate}
+	\item X.509 Zertifikat und privater RSA/ECDSA Schlüssel
+	\item EAP mit Benutzername/Passwort
+	\item Zweirunden-Authentisierung mit Methode 1) gefolgt von Methode 2)
+	\item EAP-TLS mit X.509 Zertifikat und privatem RSA/ECDSA Schlüssel
+\end{enumerate}
+
+\subsubsection{IKEv2 Certificate}
+
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "cert": {
+        "remote_addrs": [
+            "gateway"
+        ],
+        "vips": [
+            "0.0.0.0",
+            "::"
+        ],
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "cert": {
+                "remote_ts": [
+                    "::/0",
+                    "0.0.0.0/0"
+                ],
+                "esp_proposals": [
+                    "aes128gcm128-modp2048"
+                ]
+            }
+        },
+        "local": {
+            "round": 1,
+            "auth": "pubkey"
+        },
+        "remote-cert": {
+            "round": 1,
+            "auth": "pubkey",
+            "id": "moon.strongswan.org"
+        }
+    }
+}
+\end{lstlisting}
+
+\subsubsection{IKEv2 EAP (Username/Password)}
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "eap": {
+        "remote_addrs": [
+            "gateway"
+        ],
+        "vips": [
+            "0.0.0.0",
+            "::"
+        ],
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "eap": {
+                "remote_ts": [
+                    "::/0",
+                    "0.0.0.0/0"
+                ],
+                "esp_proposals": [
+                    "aes128gcm128-modp2048"
+                ]
+            }
+        },
+        "local-eap": {
+            "round": 1,
+            "auth": "eap",
+            "eap_id": "eap-test"
+        },
+        "remote-cert": {
+            "round": 1,
+            "auth": "pubkey",
+            "id": "moon.strongswan.org"
+        }
+    }
+}
+\end{lstlisting}
+\newpage
+\subsubsection{IKEv2 EAP-TLS (Certificate)}
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "eap-tls": {
+        "remote_addrs": [
+            "gateway"
+        ],
+        "vips": [
+            "0.0.0.0",
+            "::"
+        ],
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "eap-tls": {
+                "remote_ts": [
+                    "::/0",
+                    "0.0.0.0/0"
+                ],
+                "esp_proposals": [
+                    "aes128gcm128-modp2048"
+                ]
+            }
+        },
+        "local-eap-tls": {
+            "round": 1,
+            "auth": "eap-tls",
+            "eap_id": ""
+        },
+        "remote-cert": {
+            "round": 1,
+            "auth": "pubkey",
+            "id": "moon.strongswan.org"
+        }
+    }
+}
+\end{lstlisting}
+
+\newpage
+\subsubsection{	IKEv2 Certificate + EAP (Username/Password)}
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "eap-cert": {
+        "remote_addrs": [
+            "gateway"
+        ],
+        "vips": [
+            "0.0.0.0",
+            "::"
+        ],
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "eap-cert": {
+                "remote_ts": [
+                    "::/0",
+                    "0.0.0.0/0"
+                ],
+                "esp_proposals": [
+                    "aes128gcm128-modp2048"
+                ]
+            }
+        },
+        "local-cert": {
+            "round": 1,
+            "auth": "pubkey"
+        },
+        "local-eap": {
+            "round": 2,
+            "auth": "eap",
+            "eap_id": "eap-test"
+        },
+        "remote-eap-cert": {
+            "round": 1,
+            "auth": "pubkey",
+            "id": "moon.strongswan.org"
+        }
+    }
+}
+\end{lstlisting}
