@@ -1,5 +1,5 @@
 \section{Authentiserungsmethoden}
-Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind enorm, damit das Erfassen der Verbindungsdaten nicht all zu unübersichtlich wird, beschränken wir uns auf die häufigst verwendeten Szenarien. Namentlich:
+Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind enorm, damit das Erfassen der Verbindungsdaten nicht all zu unübersichtlich wird, beschränken wir uns auf die häufigst verwendeten Szenarien.
 
 \begin{enumerate}
 	\item X.509 Zertifikat und privater RSA/ECDSA Schlüssel
@@ -8,8 +8,12 @@ Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind en
 	\item EAP-TLS mit X.509 Zertifikat und privatem RSA/ECDSA Schlüssel
 \end{enumerate}
 
-\subsubsection{IKEv2 Certificate}
+Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegangen. Bei der Verwendeten Notation der Konfiguration handelt es sich um Python ordered Dictionarys.
 
+\subsubsection{IKEv2 Certificate}
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Client}\mbox{}\medskip
 \begin{lstlisting}[style=BashInputStyle]
 {
     "cert": {
@@ -31,7 +35,8 @@ Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind en
                     "0.0.0.0/0"
                 ],
                 "esp_proposals": [
-                    "aes128gcm128-modp2048"
+                    "aes128gcm128-
+                    modp2048"
                 ]
             }
         },
@@ -47,6 +52,38 @@ Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind en
     }
 }
 \end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Server}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "server-cert": {
+        "pools": ["server-pool"
+      local {
+         auth = pubkey
+         certs = moonCert.pem
+         id = moon.strongswan.org
+      }
+      remote {
+         auth = pubkey
+      }
+      children {
+         cert {
+            esp_proposals = aes128gcm128-modp2048
+         }
+      }
+      version = 2
+      proposals = aes128-sha256-modp2048
+   }
+\end{lstlisting}
+\end{minipage}
+
+
+
+
+
 
 \subsubsection{IKEv2 EAP (Username/Password)}
 \begin{lstlisting}[style=BashInputStyle]
