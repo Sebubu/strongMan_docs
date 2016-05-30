@@ -54,3 +54,167 @@ Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mit Hilfe von 
       \item Der Roadwarrior started die Unit- sowie die Integrationstests, dabei werden zwischen den Docker Container diverse Ipsec Tunnels auf- und abgebaut
       \item abschliessend wird über Erfolg oder Misserfolge per Email notifiziert
 \end{enumerate}
+
+\newpage
+\subsection{Usability Tests}
+
+Die Usability Tests sollen Ablauffehler aufzeigen und die Benutzbarkeit der Applikation insgesamt steigern. Dazu sind in einer ersten Phase zwei Personas erstellt worden.
+\\
+
+\decision{Usability Tests vs. Server Features}
+Am Ende der zweit letzten Construction Phase, nach einer Besprechung mit Herrn Steffen, entschieden wir uns Usability Tests durchzuführen und den Server Teil der Applikation in diesem Projekt nicht zu implementieren.
+
+\subsubsection{Primäre Persona User}
+
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \begin{tabular}{ l l }
+        Name: & Markus Egger \\
+        Alter: & 40 Jahre \\
+        Beruf: & Verkäufer Aussendienst \\
+        Wohnort: & Uster ZH \\
+        Zivilstand: & Verheiratet, 2 Kinder \\
+        Hobbies: & Gleitschirm, Bowling \\
+        Sprachen: & Deutsch / Englisch \\
+    \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=230px]{images/persona_user.jpg}\\
+\end{minipage}
+
+
+Markus Egger arbeitet in einem mittelgrossen Industrieunternehmen und verkauft dort Isolationsmatten aus Steinwolle. Da er viel auf Reisen bei seinen Kunden ist und dadurch längere Zeit keinen physischen Zugang zum Firmennetzwerk hat, benutzt er eine VPN Software um auf firmeninterne Daten zuzugreifen. Seine Informatikfähigkeiten beziehen sich dabei auf die in seiner KV Lehre erworbenen Kenntnisse mit Email, Word und Excel, sowie dem oberflächlichen Umgang mit ERP/CRM Systemen.
+Markus beherrscht die englische Sprache auf Verhandlungsniveau.
+
+Zusätzlich zu seinen Reisen arbeitet Markus gerne auch mal Zuhause, um mehr Zeit bei seinen erst kürzlich eingeschulten Kindern zu verbringen und seine Frau zu entlasten.
+
+\subsubsection{Test Vorlage}
+
+
+Sie sind Angestellter in der Personalabteilung der Industriefirma Techtronic AG und arbeiten heute zum ersten Mal Zuhause an ihrem Arbeitslaptop. Um Zugriff auf firmeninterne Dokumente zur erhalten, müssen Sie eine sichere Verbindung zur Tectronic AG aufbauen. Dazu hat Ihnen die Informatikabteilung ein USB-Stick mit Anleitungen, Username, Passwort und Zertifikatsdateien zur Verfügung gestellt. Ihre Aufgabe ist es nun, die unten aufgeführten Tasks zu lösen.
+
+\paragraph{Passwort ändern}
+Loggen Sie sich ein und ändern Sie ihr Passwort. \\
+
+
+\begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
+\hline
+Preconditions: & Applikation ist gestartet. User befindet sich auf der Login Seite. \\
+\hline
+Hilfsmittel: & Username und aktuelles Passwort \\
+\hline
+Artefakte: & User konnte sich einloggen. \\ 
+& Passwort ändern Feld gefunden. \\
+& Passwort konnte geändert werden. \\
+\hline
+\end{tabular}
+
+\paragraph{Verbindung erstellen}
+Erstellen Sie eine neue Verbindung zur HSR mit den gegebenen Daten. \\
+
+
+\begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
+\hline
+Preconditions: & User befindet sich auf der Startseite von strongMan eingeloggt. Connections und Certificates sind leer. Der System Administrator hat eine Anleitung zum Erstellen der Verbindung zur Verfügung gestellt. \\
+\hline
+Hilfsmittel: & Schritt für Schritt Anleitung mit Gateway, Username, Passwort, CA-Zertifikat, Identity \\
+\hline
+Artefakte: & User hat den Connections Bereich gefunden. \\
+& User hat den Add Button gefunden. \\
+& Der richtige Authentifizierungstyp ist ausgewählt. \\
+& Verbindung richtig ausgefüllt und erstellt. \\
+\hline
+\end{tabular}
+
+
+\paragraph{Verbindung starten / stoppen}
+Starten Sie die Verbindung und stoppen Sie sie wieder. \\
+
+
+\begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
+\hline
+Preconditions: & User befindet sich auf der Connections Seite. Die in Aufgabe 2 erstellte Connection ist abgespeichert. \\
+\hline
+Hilfsmittel: & - \\
+\hline
+Artefakte: & User erkennt den On/Off Button. \\
+& User kann die Verbindung starten. \\
+& User ist sich bewusst, dass die Verbindung jetzt steht (Fragen!). \\
+& Verbindung ist wieder gestoppt. \\
+\hline
+\end{tabular}
+
+\newpage
+\subsubsection{Sekundäre Persona Administrator}
+
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \begin{tabular}{ l l }
+        Name: & Remo Stoop \\
+        Alter: & 28 Jahre \\
+        Beruf: & System Administrator \\
+        Wohnort: & Greifensee ZH \\
+        Zivilstand: & Konkubinat, 1 Kind \\
+        Hobbies: & Raspberry Pi, Gamen \\
+        Sprachen: & Deutsch / Englisch \\
+    \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+    \includegraphics[width=200px]{images/persona_administrator.jpg}\\
+\end{minipage}
+
+
+Remo Stoop arbeitet wie Markus Egger im gleichen mittelgrossen Industrieunternehmen, welche Isolationsmatten herstellt. Er ist dort als System Administrator angestellt und verantwortlich für die Netzwerkinfrastruktur und der Netzwerksicherheit, inklusive dem Netzwerkzugriff von aussen.  Remo hat sich bewusst in Richtig Netzwerk weitergebildet. Nach seiner Lehre als Informatiker Systemtechnik hat er zwei fünf tägige Cisco Netzwerk Kurse besucht und ist seit dem netzwerktechnisch auf dem neusten Stand. Verschlüsslungstechniken - symmetrische wie asymmetrische - kennt er oberflächlich aus einem Modul aus seiner Lehre.
+
+Auch Remo arbeitet gerne einen Tag in der Woche zuhause, sofern es seine Arbeit erlaubt. Neben seiner Familie ist seine Hauptbeschäftigung das Gamen mit Freunden und Raspberry Pi Bastelprojekte.
+
+
+\subsubsection{Test Vorlage (erweitert User Tests)}
+
+Sie sind Systemadministrator der Industriefirma Techtronic AG und haben zuvor einen strongSwan VPN Gateway eingerichtet. Nun soll das erste Mal eine Verbindung von ausserhalb (genauer von Ihnen zuhause) in die Firma aufgebaut werden. Dazu stehen Ihnen Username, Passwort und Zertifikatsdateien zur Verfügung gestellt. Ihre Aufgabe ist es nun, die unten aufgeführten Tasks zu lösen.
+
+\paragraph{Key Container hinzufügen}
+\begin{enumerate}
+    \item Fügen Sie in der Zertifikatsverwaltung einen verschlüsselten PKCS12 Container hinzu.
+    \item Fügen Sie in der Zertifikatsverwaltung ein neues Zertifikat mit Private Key hinzu.
+    \item Welche Email Adresse ist beim Zertifkat roadwarrior.hsr.ch eingetragen?
+    \item Zertifkat roadwarrior.hsr.ch löschen.
+\end{enumerate}
+
+
+\begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
+\hline
+Preconditions: & User befindet sich auf der Startseite von strongMan. \\
+\hline
+Hilfsmittel: & Roadwarrior PKCS12 mit Passwort, Zertifikat mit Private Key \\
+\hline
+Artefakte: & User hat den Add Button gefunden. \\
+& User konnte den verschlüsselten PKCS12 Container hinzufügen. \\
+& User konnte das Zertifikat hinzufügen. \\
+& User konnte den Private Key hinzufügen. \\
+& User findet Email-Adresse. \\
+& User konnte Zertifikat löschen. \\
+\hline
+\end{tabular}
+
+
+\subsubsection{Fazit}
+Wir haben die Usability Tests mit 4 Personen durchgeführt. Die Administrator Tests haben zwei unbeteiligte HSR Studenten durchgeführt und die User Tests zwei User mit Büroerfahrung.
+
+Unten sind die wichtigsten Erkenntnisse aufgeführt:
+\begin{itemize}
+    \item Es braucht ein Text, der beschreibt, dass zuerst das Zertifikat und erst danach der Private Key geuploaded werden kann.
+    \item Die State Spalte in der Connection Table ist nicht sortierbar.
+    \item Der 'Change password' Button braucht eine Hand als Mauszeiger.
+    \item Die Authentication method der Verbindung muss änderbar sein nach der Auswahl.
+    \item Zertifikate müssen in der Verbindungskonfiguration hinzugefügt werden können.
+    \item Beschriftung der Remove Buttons muss eindeutig sein. Private Key löscht keine Zertifikate.
+    \item Verbindung darf nicht löschbar sein, wenn aktiv
+    \item Diverese Verbesserungen an der Englischen Sprache nötig.
+    \item Die Anordnung der Buttons im Add-Certificate Model verwirrt.
+    \item About Pages zeigt keine Infos.
+\end{itemize}
