@@ -1,0 +1,27 @@
+\subsection{Zertifikate}
+Um IPsec Verbindungen mit asymmetrischen Schlüsseln zu erstellen, müssen Schlüssel verwaltet werden. strongMan persistiert die geuploadeten Schlüsselcontainer in der Datenbank.
+Dabei werden folgende Schlüsselcontainer Formate unterstützt: \\
+
+\begin{tabular}{ | p{0.2\textwidth} | p{0.7\textwidth} | }
+\hline
+Schlüsselcontainer: & X509, PKCS1, PKCS8, PKCS12 \\
+\hline
+Encoding: & PEM, DER \\
+\hline
+Algorithmen: & RSA, ECDSA \\
+\hline
+\end{tabular}\\
+
+Die Applikation hat ein Uploadfeld um Schlüsselcontainer hinzuzufügen. Dabei müssen die 4 verschiedenen Containertypen unterschieden werden, um die Daten richtig auszulesen. Die Klasse ContainerDetector probiert die Datei mit allen vier ASN1 Strukturen zu parsen und gibt bei Erfolg den entsprechenden Typ zurück.
+
+\subsubsection{Implementationsdetails}
+\paragraph{Private Keys} Wie am Domain Model zu erkennen ist, hängt der Private Key immer an einem UserCertificate. Das Zertifikat muss somit immer vor dem Private Key geuploadet werden. Dies verhindert Private Key Leichen in der Datenbank und vereinfacht das Schlüsselhandling.
+
+\paragraph{Doppelte Einträge} Der CName ist normalerweise ein einfacher Eintrag wie www.raiffeisen.ch. In Ausnahmefällen kann der CName - oder auch andere Felder - auch eine Liste wie ['raiffeisen.ch', 'www.raiffeisen.ch'] sein. Die Liste wird in einen String umgewandelt und so dargestellt.
+
+\paragraph{Doppelte Zertifikate/Private Keys}
+Werden bestehende Zertifikate oder Private Keys nochmals geuploadet, erkennt die Zertifikatsverwaltung dies und verweigert den Upload. Das Matching wird anhand des Public Keys vorgenommen. Bei Zertifikaten wird der Public Key und die Version gematcht.
+
+
+
+

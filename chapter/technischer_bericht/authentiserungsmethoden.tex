@@ -8,9 +8,30 @@ Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind en
 	\item EAP-TLS mit X.509 Zertifikat und privatem RSA/ECDSA Schlüssel
 \end{enumerate}
 
-Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegangen. Bei der Verwendeten Notation der Konfiguration handelt es sich um Python ordered Dictionarys.
+Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegangen. Bei der Verwendeten Notation der Konfiguration handelt es sich um Python ordered Dictionaries.\\
+Die Client Seite wurde mit Hilfe der strongMan Applikation erstellt. Die Server Seite soll als Pendant dazu dienen, diese ist nicht in Stein gemeisselt und ist rein als mögliches Beispiel aufgeführt.
+
+\subsection{Konfiguration}
+Die Tabelle Konfiguration beschreibt einige Key Parameter, welche durch die strongMan Applikation gesetzt werden. Eine komplette Übersicht über die Paramter findet sich im strongSwan Repository auf Github\footnote{\url{https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici}}, weiter kann die Dokumentation von swanctl\footnote{\url{https://wiki.strongswan.org/projects/strongswan/wiki/Swanctlconf}} als Hilfestellung hinzugezogen werden.\\
+\begin{table}[H]
+\centering
+    \begin{tabular}{|p{0.2\textwidth}|p{0.2\textwidth}|p{0.5\textwidth}|}
+    \hline
+    \rowcolor{lightblue}
+    Parameter & Wert & Erklärung \\ \hline
+	vips	&	0.0.0.0,  :: & Virtuelle IP, welche dem Client vom Server zugewiesen wird. 0.0.0.0" und :: dienen als Wildcard-Adressen für IPv4 und IPv6, damit wird jede virtuelle IP akzeptiert.	\\ \hline
+	version & 2 & IKE Version, es wird nur die Version 2 von strongMan verwendet \\ \hline
+	auth & pubkey, eap, eap-tls & Definiert die verwendete Authentisierungsmethode. \\ \hline
+	round & 1, 2 & Wird von Certificate + EAP benötigt, da es zwei Authentiserungsrunden hat. Der Parameter wird erst ab strongSwan Version 5.4.0 unterstützt. \\ \hline
+	certs & Bytes & Byte Repräsentation des Benutzer-Zertifikates	\\ \hline
+	cacerts & Bytes & Byte Repräsentation des Server-Zertifikates	\\ \hline
+	\end{tabular}
+    \caption[Konfiguration]{Konfiguration}
+\end{table}
+\newpage
 
 \subsubsection{IKEv2 Certificate}
+Die Authentisierung zwischen Client und Server findet auf Basis eines X.509 Zertifikats und privater RSA/ECDSA Schlüssel statt.\\
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{Client}\mbox{}\medskip
@@ -35,19 +56,25 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
                     "0.0.0.0/0"
                 ],
                 "esp_proposals": [
-                    "aes128gcm128-
-                    modp2048"
+                    ''aes128gcm128-
+                    modp2048''
                 ]
             }
         },
         "local": {
             "round": 1,
             "auth": "pubkey"
+            "certs": [
+                "b'bytes_of_cert'"
+            ]
         },
         "remote-cert": {
             "round": 1,
             "auth": "pubkey",
             "id": "moon.strongswan.org"
+            "cacerts": [
+                "b'bytes_of_cert'"
+            ]
         }
     }
 }
@@ -60,32 +87,52 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
 \begin{lstlisting}[style=BashInputStyle]
 {
     "server-cert": {
-        "pools": ["server-pool"
-      local {
-         auth = pubkey
-         certs = moonCert.pem
-         id = moon.strongswan.org
-      }
-      remote {
-         auth = pubkey
-      }
-      children {
-         cert {
-            esp_proposals = aes128gcm128-modp2048
-         }
-      }
-      version = 2
-      proposals = aes128-sha256-modp2048
+        "pools": [
+            "server-pool"
+        ],
+        "local": {
+            "auth": "pubkey",
+            "id": "moon.strongswan.org",
+            "certs": [
+                "moonCert.pem"
+            ]
+        },
+        "remote": {
+            "auth": "pubkey"
+        },
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "server-cert": {
+                "esp_proposals": [
+                    ''aes128gcm128-
+                    modp2048''
+                ]
+            }
+        }
    }
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Pools}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+"server-pool": {
+    "addrs": "10.6.0.0/24"
+}
 \end{lstlisting}
 \end{minipage}
-
-
-
+\newpage
 
 
 
 \subsubsection{IKEv2 EAP (Username/Password)}
+Die Authentisierung zwischen Client und Server findet auf Basis von EAP mit Hilfe eines Benutzernamens und Passwortes statt.
+Die \textbf{eap-id} ist eine Referenz auf das Secret.
+
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Client}\mbox{}\medskip
 \begin{lstlisting}[style=BashInputStyle]
 {
     "eap": {
@@ -107,7 +154,8 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
                     "0.0.0.0/0"
                 ],
                 "esp_proposals": [
-                    "aes128gcm128-modp2048"
+                    ''aes128gcm128-
+                    modp2048''
                 ]
             }
         },
@@ -124,8 +172,72 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
     }
 }
 \end{lstlisting}
-\newpage
-\subsubsection{IKEv2 EAP-TLS (Certificate)}
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "data": "test",
+    "id": "eap-test",
+    "type": "EAP"
+}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Server}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "server-eap": {
+        "pools": [
+            "server-pool"
+        ],
+        "local": {
+            "auth": "pubkey",
+            "id": "moon.strongswan.org",
+            "certs": [
+                "moonCert.pem"
+            ]
+        },
+        "remote-eap": {
+            "auth": "eap-md5"
+        },
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "server-eap": {
+                "esp_proposals": [
+                    ''aes128gcm128-
+                    modp2048''
+                ]
+            }
+        }
+   }
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "data": "test",
+    "id": "eap-test",
+    "type": "EAP"
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Pools}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+"server-pool": {
+    "addrs": "10.6.0.0/24"
+}
+\end{lstlisting}
+\end{minipage}
+
+
+\subsubsection{IKEv2 EAP-TLS}
+Mit der EAP-TLS Konfiguration wird ohne separate IKEv2 Authentifikation ein Verbindung aufgebaut, die das TLS Client- und Serverzertifikat verwendet.\\
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Client}\mbox{}\medskip
 \begin{lstlisting}[style=BashInputStyle]
 {
     "eap-tls": {
@@ -147,14 +259,15 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
                     "0.0.0.0/0"
                 ],
                 "esp_proposals": [
-                    "aes128gcm128-modp2048"
+                    ''aes128gcm128
+                    -modp2048''
                 ]
             }
         },
         "local-eap-tls": {
             "round": 1,
             "auth": "eap-tls",
-            "eap_id": ""
+            "eap_id": "eap-test"
         },
         "remote-cert": {
             "round": 1,
@@ -164,9 +277,74 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
     }
 }
 \end{lstlisting}
-
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "data": "test",
+    "id": "eap-test",
+    "type": "EAP"
+}
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Server}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "server-eap-tls": {
+        "pools": [
+            "server-pool"
+        ],
+        "local": {
+            "auth": "pubkey",
+            "id": "moon.strongswan.org",
+            "certs": [
+                "moonCert.pem"
+            ]
+        },
+        "remote-eap": {
+            "auth": "eap-dynamic"
+            "eap_id": "eap-test"
+        },
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "server-eap-tls": {
+                "esp_proposals": [
+                    ''aes128gcm128-
+                    modp2048''
+                ]
+            }
+        }
+   }
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "data": "test",
+    "id": "eap-test",
+    "type": "EAP"
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Pools}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+"server-pool": {
+    "addrs": "10.6.0.0/24"
+}
+\end{lstlisting}
+\end{minipage}
 \newpage
+
+
 \subsubsection{	IKEv2 Certificate + EAP (Username/Password)}
+Authentisierung, die auf zwei Runden basiert also EAP und Zertifikat kombiniert.\\
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Client}\mbox{}\medskip
 \begin{lstlisting}[style=BashInputStyle]
 {
     "eap-cert": {
@@ -188,7 +366,8 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
                     "0.0.0.0/0"
                 ],
                 "esp_proposals": [
-                    "aes128gcm128-modp2048"
+                    ''aes128gcm128-
+                    modp2048''
                 ]
             }
         },
@@ -209,3 +388,68 @@ Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegange
     }
 }
 \end{lstlisting}
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{   "data": "test",
+    "id": "eap-test",
+    "type": "EAP"   }
+\end{lstlisting}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Server}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{
+    "server-cert-eap": {
+        "pools": [
+            "server-pool"
+        ],
+        "local": {
+            "auth": "pubkey",
+            "id": "moon.strongswan.org",
+            "certs": [
+                "moonCert.pem"
+            ]
+        },
+        "remote": {
+            "auth": "pubkey",
+            "round": 1
+        },
+        "remote-eap": {
+            "auth": "eap-md5",
+            "eap_id": "eap-test",
+            "round": 2
+        },
+        "version": 2,
+        "proposals": [
+            "aes128-sha256-modp2048"
+        ],
+        "children": {
+            "server-cert-eap": {
+                "esp_proposals": [
+                    ''aes128gcm128-
+                    modp2048''
+                ]
+            }
+        }
+   }
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Secrets}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+{   
+    "data": "test",
+    "id": "eap-test",
+    "type": "EAP"   
+}
+\end{lstlisting}
+\hspace*{18pt}\textbf{Pools}\mbox{}\medskip
+\begin{lstlisting}[style=BashInputStyle]
+"server-pool": {
+    "addrs": "10.6.0.0/24"
+}
+\end{lstlisting}
+\end{minipage}
+\nolinebreak
+\nopagebreak

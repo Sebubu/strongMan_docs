@@ -160,6 +160,7 @@ showstringspaces=false            %
 		\begin{titlepage}
 		% Logos
 		\begin{picture}(0,200)(0,-100)
+		    \put(200, -15){\includegraphics[height=17mm]{images/ita_logo.jpg}}
       		\put(-60, -30){\includegraphics[height=30mm]{images/hsrlogo.png}}
 		\end{picture}
 
@@ -181,8 +182,12 @@ showstringspaces=false            %
 				\ifthenelse{\equal{\thesisauthora}{}}{\message{blub}}{\ifthenelse{\equal{\thesisauthorb}{}}{\emph{Autor:} & \thesisauthora\\[3pt]}{\ifthenelse{\equal{\thesisauthorc}{}}{\emph{Autoren:} & \thesisauthora \ \& \thesisauthorb\\[3pt]}{\emph{Autoren:} & \thesisauthora \ \& \thesisauthorb \ \& \thesisauthorc\\[3pt]}}}
 				% Checking Supporter
 				\ifthenelse{\equal{\professor}{}}{\\}{\emph{Betreuer:} & \professor\\[3pt]}
+				\ifthenelse{\equal{\gegenleser}{}}{\\}{\emph{Gegenleser:} & \gegenleser\\[3pt]}
+				\ifthenelse{\equal{\experte}{}}{\\}{\emph{Experte:} & \experte\\[3pt]}
 					\emph{Arbeitsperiode:} & \timeperiode\\[3pt]
 				\end{tabular}
+				
+
 			\end{flushleft}
 		\end{minipage}
 \end{titlepage}%    

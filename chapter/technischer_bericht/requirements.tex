@@ -1,0 +1,11 @@
+\section{Abhängigkeiten}
+Ein Ziel dieses Projektes war es, möglichst keine kompilierende Abhängigkeiten zu verwenden. Die Bibliotheken, die mit Pip installiert werden, dürfen also keinen komplierenden Code wie C++ enthalten. In anderen Worten sollte das Projekt Pure-Python sein. 
+
+\paragraph{django} Bibliothek zur Verwendung des Django Webframeworks.
+\paragraph{oscrypto} Zertifikatsparser.
+\paragraph{asn1crypto} Zertifikatsparser, Abhängigkeit von oscrypto. 
+\paragraph{pyaes} Python AES Implementation. Gebraucht für die Datenbankverschlüsslung.
+\paragraph{django-tables2} Plugin zur Anzeige von HTML Tabellen. Unterstützt Pagination, Sortierung.
+\paragraph{vici} Vici Plugin für strongSwan
+\paragraph{gunicorn} Webserver für die Produktionsumgebung
+\paragraph{dj\_static} Plugin zur Auslieferung von den statischen Dateien (css, js) in der Produktionsumgebung.
