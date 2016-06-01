@@ -35,24 +35,15 @@ Versetzt die strongMan Applikation in den gleichen Zustand wie vor der Installat
 \begin{lstlisting}[style=BashInputStyle]
 	 sudo ./setup.py add-service
 \end{lstlisting}
-Fügt einen Systemd service für strongMan hinzu. Der Service ist zu Beginn gestoppt und disabled.\\
+Fügt einen Systemd service für strongMan hinzu. Der Service ist gleich enabled und gestartet. Zusätzlich zum Service wird ein Launcher Icon hinzugefügt, der http://localhost:1515 mit dem Standartbrowser öffnet.\\
 
-Starte den Service mit folgendem Befehl:
-\begin{lstlisting}[style=BashInputStyle]
-	 sudo systemctl start strongMan.service
-\end{lstlisting}
-
-Lasse den Service automatisch starten beim Systemstart:
-\begin{lstlisting}[style=BashInputStyle]
-	 sudo systemctl enable strongMan.service
-\end{lstlisting}
 Es werden Root Rechte benötigt, um Änderungen am Systemd zu machen.
 
 \subsubsection{remove-service}
 \begin{lstlisting}[style=BashInputStyle]
 	 sudo ./setup.py remove-service
 \end{lstlisting}
-Entfernt den Systemd Service.
+Entfernt den Systemd Service und das Launcher Icon.
 
 \subsubsection{migrate}
 \begin{lstlisting}[style=BashInputStyle]

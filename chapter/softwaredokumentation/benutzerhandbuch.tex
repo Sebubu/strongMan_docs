@@ -1,6 +1,6 @@
 \section{Benutzerhandbuch}
 
-\section{Installation}
+\subsection{Installation}
 \subsubsection{Anforderungen}
 \begin{itemize}
 	\item strongSwan mit Vici plugin (>= v5.4.0)
@@ -22,16 +22,14 @@
 \end{lstlisting}
 
 \subsubsection{Systemd Service hinzufügen (Optional)}
-Füge einen Systemd Service hinzu, der strongMan bei jedem Systemstart automatisch startet.
+Füge einen Systemd Service hinzu, der strongMan bei jedem Systemstart automatisch startet. Zusätzlich zum Service wird ein Icon in den Launcher eingefügt.
 \begin{lstlisting}[style=BashInputStyle]
     sudo ./setup.py add-service # Adds the service
-    sudo systemctl enable strongMan.service
-    sudo systemctl start strongMan.service
 \end{lstlisting}
 
 \subsection{Deinstallation}
 \subsubsection{Systemd Service entfernen (Optional)}
-Entferne den Systemd Service, wenn installiert.
+Entferne den Systemd Service und das Launcher Icon, wenn installiert.
 \begin{lstlisting}[style=BashInputStyle]
     sudo ./setup.py remove-service
 \end{lstlisting}
