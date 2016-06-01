@@ -1,15 +1,14 @@
 \newpage
 \subsection{Log Messages}
 \subsubsection{Ausgangslage}
-Eine VPN Tunnel wurde mit Hilfe des strongMan korrekt konfiguriert und steht nun bereit für den Auf- und Abbau.
-Der Tunnel wird gestartet, dies lösst auf der Client Seite einen Asynchronen Request aus, der auf dem Backend die Daten des konfigurierten Tunnels aus der Datenbank liest und in eine passende Form für die VICI Schnittstelle aufbereiten und übergibt. Die geladene Verbindung wird nun gestartet, was zur Folge hat, dass blockierend ein Generator zurück gegeben wird. Welcher jede neue Nachricht in die Datenbank loggt.
+Log Nachrichten werden beim  starten und stoppen von VPN Tunnels erzeugt und in der Datenbank gespeichert. \\
+Dieser Vorgang wird im Frontend gestartet und lösst im Backend einen Thread mit unbekannter Laufzeit aus. Dieser Thread interagiert mit der Vici Schnittstelle und erhält beim Auf-/Abbauen der Verbindungen einen Python Generator als Rückgabewert, welcher bei jeder Iteration ein ordered Dictionary mit Loginformationen enthält. Diese Logs werden nun bei jedem Iterationsschritt in der Datebank persistiert.\\ Dieser Prozess ist an den Verbindungsaufbau des strongSwans gekoppelt und kann daher bis zu mehreren Minuten andauern kann.
 
 \subsubsection{Problematik}
-Die Log Nachrichten werden durch einen Thread, dessen Laufzeit nicht bekannt ist, mit Hilfe des Generators in die Datenbank geschrieben. Der Thread terminiert, wenn ein Tunnel aufgebaut wurde oder falls dies nicht möglich war erst nach mehreren Retry versuchen. Während dieser Zeit werden diverse Logs gespeichert, die dem Benutzer möglichst in Echtzeit angezeigt werden sollten. 
+Das Frontend möchte nun jedoch möglichst in Echtzeit an diese Loginformationen kommen und nicht bis auf das Ende der Iterationen warten, sonder die einzelnen Iterationsschrite mitverfolgen.
 
 \subsubsection{Lösungsansatz}
-Das laden der Connection Overview Seite lösst einen Long Polling Request aus, der alle zuest alle Logs die älter als 5 Minuten sind aus der Datenbank löscht und die restlichen dem Frontend zurück gibt. Die führt dazu , dass ein neuer Long Polling Request gestartet wird, welcher den neusten Log als Parameter mit gibt und nun nur noch neuere Meldungen übermittelt werden. Dies wird wiederholt, bis die Connection Overview Seite verlassen wird.
-\medskip
+Beim aufruf der Connections Seite wird einen HTTP Long Polling Request ausgelösst, der zuest alle Logs, die älter als 5 Minuten sind, aus der Datenbank löscht und die restlichen dem Frontend zurück gibt. Dies führt dazu, dass ein neuer Request gestartet wird, welcher den neusten Log als Parameter mit gibt und nun nur noch neuere Logs übermittelt werden. Das ganze wird wiederholt, bis die Connections Seite verlassen wird.\\
 \begin{figure}[H]
 \centering
 \includegraphics[width=400pt]{images/log_messages_seq.png}

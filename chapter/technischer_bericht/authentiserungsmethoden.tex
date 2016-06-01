@@ -1,5 +1,5 @@
 \section{Authentiserungsmethoden}
-Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind enorm, damit das Erfassen der Verbindungsdaten nicht all zu unübersichtlich wird, beschränken wir uns auf die häufigst verwendeten Szenarien.
+Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind enorm. Damit das Erfassen der Verbindungsdaten nicht all zu unübersichtlich wird, beschränken wir uns auf die häufigst verwendeten Szenarien.
 
 \begin{enumerate}
 	\item X.509 Zertifikat und privater RSA/ECDSA Schlüssel
@@ -9,7 +9,7 @@ Die Konfigurationsmöglichkeiten der strongSwan Open Source VPN Software sind en
 \end{enumerate}
 
 Nachfolgend wird auf die jeweiligen Authentiserungsmethoden im Detail eingegangen. Bei der Verwendeten Notation der Konfiguration handelt es sich um Python ordered Dictionaries.\\
-Die Client Seite wurde mit Hilfe der strongMan Applikation erstellt. Die Server Seite soll als Pendant dazu dienen, diese ist nicht in Stein gemeisselt und ist rein als mögliches Beispiel aufgeführt.
+Die Clientseite wurde mit Hilfe der strongMan Applikation erstellt. Die Serverseite dient als Pendant dazu und ist als ein funktionstüchtiges Beispiel aufgeführt.
 
 \subsubsection{Konfiguration}
 Die Tabelle Konfiguration beschreibt einige Key Parameter, welche durch die strongMan Applikation gesetzt werden. Eine komplette Übersicht über die Paramter findet sich im strongSwan Repository auf Github\footnote{\url{https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici}}, weiter kann die Dokumentation von swanctl\footnote{\url{https://wiki.strongswan.org/projects/strongswan/wiki/Swanctlconf}} als Hilfestellung hinzugezogen werden.\\
@@ -19,7 +19,7 @@ Die Tabelle Konfiguration beschreibt einige Key Parameter, welche durch die stro
     \hline
     \rowcolor{lightblue}
     Parameter & Wert & Erklärung \\ \hline
-	vips	&	0.0.0.0,  :: & Virtuelle IP, welche dem Client vom Server zugewiesen wird. 0.0.0.0" und :: dienen als Wildcard-Adressen für IPv4 und IPv6, damit wird jede virtuelle IP akzeptiert.	\\ \hline
+	vips	&	0.0.0.0,  :: & Virtuelle IP, welche dem Client vom Server zugewiesen wird. 0.0.0.0 und :: dienen als Wildcard-Adressen für IPv4 und IPv6, damit wird jede virtuelle IP akzeptiert.	\\ \hline
 	version & 2 & IKE Version, es wird nur die Version 2 von strongMan verwendet \\ \hline
 	auth & pubkey, eap, eap-tls & Definiert die verwendete Authentisierungsmethode. \\ \hline
 	round & 1, 2 & Wird von Certificate + EAP benötigt, da es zwei Authentiserungsrunden hat. Der Parameter wird erst ab strongSwan Version 5.4.0 unterstützt. \\ \hline
@@ -341,7 +341,7 @@ Mit der EAP-TLS Konfiguration wird ohne separate IKEv2 Authentifikation ein Verb
 
 
 \subsubsection{	IKEv2 Certificate + EAP (Username/Password)}
-Authentisierung, die auf zwei Runden basiert also EAP und Zertifikat kombiniert.\\
+Zwei Runden Authentisierung, basierend auf der Kombination von EAP und Zertifikat.\\
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{Client}\mbox{}\medskip

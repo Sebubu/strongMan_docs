@@ -4,7 +4,7 @@
 Änderung an den Daten der Anwendung dürfen nur authentifizierte Benutzer machen. Nicht authentifizierte Benutzer werden auf die Anmeldeseite weitergeleitet.
 
 \paragraph{Sensitive Daten}
-Kritische Daten sind das Passwort für den Benutzer/Adminstrator und die Private Keys. Die Private Key werden entschlüsselt und im Anschluss mit dem Password des Benutzers verschlüsselt in der Datenbank gespeichert.
+Kritische Daten sind das Passwort für den Benutzer/Adminstrator, die Private Keys und Secret Konfigurationsdaten (z.B. EAP Passwort). Die Private Key werden entschlüsselt und im Anschluss mit dem Password des Benutzers verschlüsselt in der Datenbank gespeichert.
 
 \paragraph{Passwort Anforderungen}
 \begin{itemize}
@@ -17,7 +17,6 @@ Kritische Daten sind das Passwort für den Benutzer/Adminstrator und die Private
 
 \paragraph{Weitere Schutzmassnahmen}
 \begin{itemize}
-	\item Das Produktivsystem sollte schlussendlich über HTTPS erreichbar sein, der Einfachheit halber wird in der Entwicklungs- und Stagingumgebung HTTP verwendet
 	\item Die Applikation sollte vor SQL Injection sicher sein
 	\item Um vor Cross Site Attacken sicher zu sein, werden CSFR Tokens verwendet
 \end{itemize}
@@ -25,29 +24,33 @@ Kritische Daten sind das Passwort für den Benutzer/Adminstrator und die Private
 \paragraph{Interoperabilität}
 Als externe Schnittstelle ist das Vici Interface aufzuzählen, dabei wir über Unix Sockets kommuniziert. StrongSwan bietet dazu schon eine Python Implementation an.
 \paragraph{Richtigkeit}
-Alle Eingabefehler werden validiert und auf deren Korrektheit überprüft. Hier sind die VICI spezifischen Felder wie IP-Adressen und Subnets speziell zu erwähnen.
+Alle Eingabefehler werden validiert und auf deren Korrektheit überprüft.
+
 \subsubsection{Zuverlässigkeit}
+
 \paragraph{Wiederherstellbarkeit}
-Nach einem Systemabsturz oder Stopp der Anwendung, soll die Anwendung ohne Komplikationen wieder gestartet werden können. Der User muss sich neu einloggen. Die Tunnels im Usermode werden beim Start der Applikation nicht direkt gestartet. Die Tunnels im Adminmode werden direkt gestartet.
+Nach einem Systemabsturz oder Stopp, soll die Anwendung ohne Komplikationen wieder gestartet werden können. Der User muss sich neu einloggen. Die Tunnels im Usermode werden beim Start der Applikation nicht direkt gestartet. Die Tunnels im Adminmode werden direkt gestartet.
+
 \paragraph{Fehlertoleranz}
 Bei einem Anwendungsfehler sollte nur die Operation des verursachten Benutzers abgebrochen werden. Andere Benutzer sollten vom Fehler nicht betroffen sein.\\
 Bsp.: Bei fehlerhaften Löschen eines Zertifikates, sollen die Connections nicht gelöscht werden.
 \subsubsection{Benutzbarkeit}
+
 \paragraph{Erlernbarkeit}
-Neue Benutzer sollten die grundlegenden Funktionen durch Verwenden der Anwendung und eines Tutorials erlernen können. Er soll sich nicht durch die StrongSwan Dokumentation schlagen müssen, um das GUI bedienen zu können.
+Neue Benutzer sollten die grundlegenden Funktionen durch Verwenden der Anwendung und eines Tutorials erlernen können.
+
 \paragraph{Bedienbarkeit}
-Die Anwendung sollte leicht bedienbar sein. Die Applikation sollte sowohl auf einem Smartphone und Desktop bedienbar sein, weshalb wir mit responsives Webdesign arbeiten.
-\medskip
-Minimale Auflösung: 	380x600px
-Maximale Auflösung: 	1920x1080px
-\medskip
-Wir verwenden dabei 2 Skalierungsstufen (Smartphones, Desktop).
+Die Anwendung sollte leicht bedienbar sein. Die Applikation sollte sowohl auf einem Smartphone, wie auch auf einem Desktopcomputer bedienbar sein, weshalb wir mit einem responsiven Webdesign arbeiten. \\\\
+Minimale Auflösung: 	640 × 960 px \\
+Maximale Auflösung: 	1920 x 1080 px \\\\
+Wir verwenden dabei 2 Skalierungsstufen (Smartphones, Desktopcomputer).
 
 \paragraph{Robustheit}
 Jedes Eingabefeld soll durch die Webseite validiert werden. Falsche Eingaben werden angezeigt, damit der Benutzer seine Eingabe korrigieren kann. Für jede falsche Eingabe soll eine kleiner Hilfetext erscheinen.
+
 \paragraph{Effizienz}
 Die Anwendung wird für einen zur gleichen Zeit arbeitenden User spezifiziert. Es können theoretisch mehrere User auf der Anwendung arbeiten, es existiert aber nur ein Userlogin und es können im schlimmsten Fall Race Conditions auftreten.
-Die Ladezeit für die Anwendung soll für jede Operation unter 1 Sekunde bleiben. Geschwindigkeitsmässig muss das Projekt nicht spezifisch auf “langsame Devices” wie Router oder Raspberry Pi achten.
+Die Ladezeit für die Anwendung soll für jede Operation unter 1 Sekunde bleiben. Bezüglich Geschwindigkeit muss das Projekt nicht spezifisch auf “langsame Devices” wie Router oder Raspberry Pi's achten.
 
 \subsubsection{Änderbarkeit}
 Die Applikation soll auch nach Projektabschluss betreubar sein. Daher sollen folgende Anforderungen erfüllt werden: 
@@ -57,24 +60,22 @@ Die Applikation soll auch nach Projektabschluss betreubar sein. Daher sollen fol
 \end{itemize}
 
 \paragraph{Modifizierbarkeit}
-Es soll bei der Entwicklung darauf geachtet werden, zukünftige Erweiterungen nicht durch Design-Entscheide auszuschliessen. Die soll besonders auf die Kann-Anforderung des VPN-Gateways (Admin-Mode) geschehen.
+Es soll bei der Entwicklung darauf geachtet werden, zukünftige Erweiterungen nicht durch Design-Entscheide auszuschliessen.
 
 
 \subsubsection{Übertragbarkeit}
-Server: Die Anwendung muss mithilfe eines Django kompatiblen Webservers zum laufen gebracht werden. Zusätzlich zu den Django Anforderungen muss ein StrongSwan mit der VICI Schnittstelle installiert sein.
+Server: Die Anwendung muss mithilfe eines Django kompatiblen Webservers zum laufen gebracht werden. Zusätzlich zu den Django Anforderungen muss strongSwan mit der Vici Schnittstelle installiert sein.
 
 Client: Auf dem Client muss ein aktueller Browser mit HTML5 und Javascript Unterstützung installiert sein. Die Applikation wird mit Google Chrome 49 und Firefox 45 getestet.
 
 \paragraph{Schnittstellen}
 Die Anwendung hat keine Schnittstellen gegen aussen.
 
-
-\subsubsection{Supportability}
 \paragraph{Internationalization}
-Die Applikation unterstützt vorerst nur die englische Sprache. Das Projekt arbeitet jedoch mit den Internationalisierungskomponenten von Django, welche die Implementierung von weiteren Sprachen erleichtert. Somit soll die Applikation bereit sein zur Implementierung weiterer Sprachen.
+Die Applikation unterstützt vorerst nur die englische Sprache.
 
 \paragraph{Testing}
-Die Hauptfunktionen im Projekt sollten mittels Unit Test getestet werden. Die Haupt Use Cases müssen mit Integration Tests überprüft werden. Es sind keine Stresstests mit Loadtesting Frameworks wie Gatling vorgesehen.
+Die Hauptfunktionen im Projekt sollten mittels Unit Tests getestet werden. Die Haupt Use Cases müssen mit Integration Tests überprüft werden. Es sind keine Stresstests mit Loadtesting Frameworks wie Gatling vorgesehen.
 
 
 

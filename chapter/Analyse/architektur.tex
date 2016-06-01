@@ -1,9 +1,9 @@
 \subsection{Architektur}
 
 \subsubsection{Django}
-Django ist ein Python Framework für Webentwicklung, Projekte setzten für die Strukturierung Apps ein, diese sollten so weit wie möglich unabhängig sein. Damit die Wiederverwendbarkeit gewährleistet wird. Also besteht ein Projekt aus mehreren Apps und ein App kann in mehreren Projekten vorhanden sein.
+Django ist ein Python Framework zur Webentwicklung. Projekte werden zur Strukturierung in Apps eingeteilt, die untereinander unabhängig sind. Apps können so gestaltet werden, dass man sie wiederverwenden kann.
 \paragraph{MVC Konzept}
-Auch Django baut auf dem MVC Konzept auf unterscheidet sich jedoch in der Namensgebung vom klassischen Aufbau. 
+Django baut auf dem MVC Konzept auf, unterscheidet sich jedoch in der Namensgebung vom klassischen Aufbau. 
 \medskip
 \begin{table}[H]
 \centering
@@ -19,7 +19,7 @@ Auch Django baut auf dem MVC Konzept auf unterscheidet sich jedoch in der Namens
 \end{table}
 
 \paragraph{Templates}
-In Django ist ein Template im Grund eine einfach Textdatei, welches \textbf{variables} und \textbf{tags} enthält. Die \textbf{\{\{ variable \}\})} werden durch die entsprechenden Werte ersetzt und die \textbf{\{\% tags \%\}} beinhalten die Logik der Templates.
+In Django ist ein Template im Grund eine einfach Textdatei, welches \textbf{variables} und \textbf{tags} enthält. Die \textbf{\{\{ variables \}\})} werden durch die entsprechenden Werte ersetzt und die \textbf{\{\% tags \%\}} beinhalten die Logik der Templates.
 
 \subsubsection{Beispiel Template}
 \begin{python}
@@ -52,7 +52,7 @@ def overview(request):
         return render(self.request, 'overview.html', {'connections': connections})
 \end{python}
 
-\paragraph{Models} Django Models definieren die Daten, sie beinhalten die entsprechenden Felder und Relation, regeln die Zugriffe auf die Datenbank mit Hilfe von OR-Mapper und beinhalten das Verhalten der Daten.
+\paragraph{Models} Django Models definieren die Daten. Sie beinhalten die entsprechenden Felder und Relation, regeln die Zugriffe auf die Datenbank mit Hilfe eines OR-Mappers und beinhalten das Verhalten der Daten.
 \begin{itemize}
 	\item Ein Model steht für eine Tabelle in der Datenbank
 	\item Die Attribute der Models widerspiegeln die Spalten
@@ -75,7 +75,7 @@ class Secret(models.Model):
 \end{python}
 
 
-\paragraph{Routing} Um Adressen auf auf Funktionen und schlussendlich Seiten zu mappen, verwendet Django URL-Konfigurationsdateien (urls.py). Diese enthalten reguläre Ausdrücke, welchen Funktionen aus Module zugeordnet 
+\paragraph{Routing} Um Adressen auf Funktionen und schlussendlich Seiten zu mappen, verwendet Django URL-Konfigurationsdateien (urls.py). Diese enthalten reguläre Ausdrücke, welchen Funktionen aus Module zugeordnet 
 werden.
 
 \subsubsection{Beispiel urls.py}
@@ -89,21 +89,6 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/$', views.update, name='update')
 ]
 \end{python}
-
-
-\subsubsection{Struktur strongMan}
-\begin{figure}[H]
-\dirtree{%
-.1 strongMan.
-.2 apps.
-.3 certificates.
-.3 connections.
-.3 vici.
-.3 encryption.
-.2 settings.
-.2 static.
-}
-\end{figure}
 
 \subsection{Domain Model}
 
