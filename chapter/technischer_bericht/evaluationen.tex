@@ -180,10 +180,10 @@ Pycrypto unterstützt alle geforderten Formate inklusive Verschlüsslung. Es bas
 	Matching zwischen Public und Private Key ist möglich &	Kann & ~  \\ \hline
 	Einfaches API &	Kann & x \\ \hline
 	\end{tabular}
-    \caption[Pycrypto]{Pycrypto}
+    \caption[Oscrypto]{Oscrypto}
 \end{table}
 \medskip
-Oscrypto ist eine neu entstandene Crypto Bibliothek für Python. Es unterstützt alle nötigen Formate inklusive Verschlüsslung. Die meisten Funktionen können ohne die OpenSSL Bibliothek im Hintergrund verwendet werden. Mit wenigen Befehlen kann oscrypto alle nötigen Formate lesen, diese müssen zur Erkennung nicht manuell durch probiert werden.\\\\
+Oscrypto ist eine neu entstandene Crypto Bibliothek für Python. Es unterstützt alle nötigen Formate inklusive Verschlüsslung. Die meisten Funktionen können ohne die OpenSSL Bibliothek im Hintergrund verwendet werden. Mit wenigen Befehlen kann oscrypto alle nötigen Formate lesen.\\\\
 
 \decision{Evaluation Zertifikatsbibliothek}
 Der Entscheid fiel klar auf oscrypto. Oscrypto ist eine pure Python Bibliothek, welche verschiedene Cryptofunktionen anbietet. Für das Parsen und Lesen von Keycontainern wrappt oscrypto die asn1crypto Bibliothek (auch pure Python). Für andere Cryptofunktionen wrappt oscrypto die standartmässig installierte OpenSSL Library, welche wir in dieser Arbeit aber nicht brauchen.
