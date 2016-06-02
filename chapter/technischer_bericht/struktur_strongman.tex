@@ -1,0 +1,49 @@
+\subsection{Struktur strongMan}
+Die strongMan Projektstruktur ist im Anschluss aufgeführt, sie beinhaltet nur die strukturell wichtigsten Punkte.\\
+\begin{figure}[H]
+\dirtree{%
+.1 strongMan.
+.2 apps.
+.3 connections.
+.3 certificates.
+.3 vici.
+.3 encryption.
+.2 settings.
+.2 fixtures.
+.2 tests.
+}
+\end{figure}
+
+\medskip
+
+\subsubsection{apps}
+\par
+\begingroup
+\leftskip=0.5cm 
+\noindent
+\paragraph{vici} stellt den anderen Apps den Einstiegspunkt zur Vici-Schnittstelle zur Verfügung. 
+
+\paragraph{encryption} ist für die Verschlüsselung der sensitiven Daten verantwortlich.
+
+\paragraph{certificates} verwaltet die Zertifikate, regelt somit das Erfassen, Löschen, Entschlüsseln und Persistieren. Weiter bestehen Abhängigkeiten zu der \textbf{vici} App, welche Zertifikate die von der strongSwan Applikation
+verwaltet werden auch in strongMan einbindet und zur \textbf{encryption}, die die privaten Schlüssel verschlüsselt in der Datenbank ablegt.
+
+\paragraph{connections} verwaltet die Konfiguration der VPN-Tunnels, sowie das Aufbereiten dieser Daten in Vici/strongSwan konforme ordered Dictionaries. Es gibt also Abhängikeiten zu allen anderen Apps.
+
+\par
+\endgroup
+
+\subsubsection{settings}
+Beinhaltet die Django spezifischen Einstellung, wie zum Beispiel die verwendeten Apps, Environement Variabeln, Modies etc. Besteht aus verschieden Settingsfiles, die je nach Verwendung in Einsatz kommen. Namentlich:
+\begin{itemize}
+    \item base.py, dient als Basis für alle anderen
+    \item local.py, für die Entwicklung
+    \item deployment.py, gedacht für die produktiven Verwendung 
+\end{itemize}
+
+\subsubsection{fixtures}
+Wird genutzt  Initialdaten in Form einer Json-Datei oder ähnlich der Datenbank zur Verfügung zu stellen. In unserem Fall wird der vorkonfigurierte Benutzer und dessen Passwort gesetzt.
+
+\subsubsection{tests}
+Ordner der die Unit-Tests, sowie die Integrations-Tests beinhaltet. Diese können durch Strukturierung seperat ausgeführt werden.
+\newpage

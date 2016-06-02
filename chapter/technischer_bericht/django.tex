@@ -1,0 +1,90 @@
+\subsection{Einführung Django}
+Django ist ein Python Framework zur Webentwicklung. Projekte werden zur Strukturierung in Apps eingeteilt, die untereinander unabhängig sind. Apps können so gestaltet werden, dass man sie wiederverwenden kann.
+\paragraph{MVC Konzept}
+Django baut auf dem MVC Konzept auf, unterscheidet sich jedoch in der Namensgebung vom klassischen Aufbau. 
+\medskip
+\begin{table}[H]
+\centering
+    \begin{tabular}{|l|l|l|}
+    \hline    
+    \rowcolor{lightblue}
+	klassisch & Django & Anmerkung \\ \hline
+	Model & Model & gleich wie allgemein üblich \\ \hline
+	View & Templates & Views sind in Django Templates, da diese nicht mehr als Vorlagen sind \\ \hline
+	Controller & Views & Der Controller wird zur View und dient als Schnittstelle für den Client \\ \hline
+    \end{tabular}
+    \caption[MVC Konzept Django]{MVC Konzept Django}
+\end{table}
+
+\paragraph{Templates}
+In Django ist ein Template im Grund eine einfach Textdatei, welches \textbf{variables} und \textbf{tags} enthält. Die \textbf{\{\{ variables \}\})} werden durch die entsprechenden Werte ersetzt und die \textbf{\{\% tags \%\}} beinhalten die Logik der Templates.
+
+\subsubsection{Beispiel Template}
+\begin{python}
+{% extends "base.html" %}
+{% load vici_checker %}
+{% block content %}
+	{% vici_reachable as reachable %}
+	{% if reachable %}
+		Daemon: {{ daemon }} <br>
+        <h2>Installed plugins</h2>
+       	{% for plugin in plugins %}
+        	{{ plugin }}
+        {% endfor %}
+	{% else %}
+    	<h3>Can not display information without the vici interface.</h3>
+    {% endif %}
+{% endblock %}
+\end{python}
+
+\paragraph{Views} Die Views verarbeiten die Requests, sammeln Daten aus der Datenbank, bestücken die Templates und retournieren diese.
+
+\subsubsection{Beispiel views.py}
+\begin{python}
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def overview(request):
+        connections = Connection.objects.all()
+        return render(self.request, 'overview.html', {'connections': connections})
+\end{python}
+
+\paragraph{Models} Django Models definieren die Daten. Sie beinhalten die entsprechenden Felder und Relation, regeln die Zugriffe auf die Datenbank mit Hilfe eines OR-Mappers und beinhalten das Verhalten der Daten.
+\begin{itemize}
+	\item Ein Model steht für eine Tabelle in der Datenbank
+	\item Die Attribute der Models widerspiegeln die Spalten
+	\item Und die Methoden repräsentieren das Verhalten
+\end{itemize}
+
+\subsubsection{Beispiel models.py}
+\begin{python}
+from collections import OrderedDict
+from django.db import models
+
+class Secret(models.Model):
+    type = models.TextField()
+    data = fields.EncryptedCharField(max_length=50)
+    authentication = models.ForeignKey(Authentication)
+
+    def dict(self):
+        eap_id = self.authentication.subclass().eap_id
+        return OrderedDict(type=self.type, data=self.data, id=eap_id)
+\end{python}
+
+
+\paragraph{Routing} Um Adressen auf Funktionen und schlussendlich Seiten zu mappen, verwendet Django URL-Konfigurationsdateien (urls.py). Diese enthalten reguläre Ausdrücke, welchen Funktionen aus Module zugeordnet 
+werden.
+
+\subsubsection{Beispiel urls.py}
+\begin{python}
+from django.conf.urls import url
+
+app_name = 'connections'
+urlpatterns = [
+    url(r'^$', views.overview, name='index'),
+    url(r'^add/$', views.create, name='choose'),
+    url(r'^(?P<id>\d+)/$', views.update, name='update')
+]
+\end{python}
+\newpage
