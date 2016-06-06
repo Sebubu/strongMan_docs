@@ -32,8 +32,6 @@ Die Tabelle Konfiguration beschreibt einige Key Parameter, welche durch die stro
 
 \subsubsection{IKEv2 Certificate}
 Die Authentisierung zwischen Client und Server findet auf Basis eines X.509 Zertifikats und privater RSA/ECDSA Schlüssel statt.\\
-\nolinebreak
-\nopagebreak
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{Eingabefelder}\mbox{}\medskip
@@ -47,31 +45,31 @@ Die Authentisierung zwischen Client und Server findet auf Basis eines X.509 Zert
 \begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{Beschreibung}\mbox{}\\
-\subsubsection{Name}
+\paragraph{Name}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: 'Bezeichner'\\
 Eindeutige Bezeichnung für die Verbindung \\
 
-\subsubsection{Server}
+\paragraph{Server}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: remote\_addrs\\
 Hostname oder IP des Servers\\
 
-\subsubsection{User certificate}
+\paragraph{User certificate}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: local.certs\\
 Auswahl der Benutzerzertifikate. Im ordered Dictionary wird der komplette DER-Container in Binärer Form übermittelt.\\
 
-\subsubsection{Identitiy}
+\paragraph{Identitiy}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: local.certs\\
 Auswahl der Benutzerzertifikate. Im ordered Dictionary wird der komplette DER-Container in Binärer Form übermittelt.\\
 
-\subsubsection{User certificate}
+\paragraph{User certificate}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: local.id\\
 Auswahl zwischen Subject Alternative Name und Distinguished Name. Standardmässig wird der Distinguished Name gesetzt, somit wird nur bei Auswahl eines Subject Alternative Name die local.id in das ordered Dictionary geschrieben.\\
 
-\subsubsection{CA/Server certificate}
+\paragraph{CA/Server certificate}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: remote.cacerts\\
-Wenn 'Choose automatically'  werden alle CA/Server Zertifikate an den strongSwan übergeben, 
+Die automatische Auswahl bewirkt, dass alle CA/Server Zertifikate an den strongSwan übergeben werden und dieser selbständig entscheidet. Ansonsten wird das passende manuell ausgewählt.\\
 
-\subsubsection{Identity}
+\paragraph{Identity}\mbox{}\\
 \hspace*{18pt}Ordered Dictionary: remote.id\\
 Bezeichner für die Server identifikation. Per Default wird der \textbf{Server} Eintrag übernommen. Ansonsten auch manuell setzbar.\\
 
@@ -175,6 +173,31 @@ Bezeichner für die Server identifikation. Per Default wird der \textbf{Server} 
 \subsubsection{IKEv2 EAP (Username/Password)}
 Die Authentisierung zwischen Client und Server findet auf Basis von EAP mit Hilfe eines Benutzernamens und Passwortes statt.
 Die \textbf{eap-id} ist eine Referenz auf das Secret.
+
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Eingabefelder}\mbox{}\medskip
+    \begin{figure}[H]
+    	\centering
+    	\includegraphics[width=200pt]{images/ike_eap.png}
+    	\caption{IKEv2 EAP}
+    \end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Beschreibung}\mbox{}\\
+\paragraph{Username}\mbox{}\\
+\hspace*{18pt}Ordered Dictionary: secrets.id, local.eap\_id\\
+Username wird als als Referenz zwischen den Secrets und der local Section verwendet. \\
+
+\paragraph{Password}\mbox{}\\
+\hspace*{18pt}Ordered Dictionary: secrets.data\\
+Passwort für die EAP Authentisierung wird verschlüsselt in der Datenbank gespeichert.\\
+
+\end{minipage}
+\newpage
+
 
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
