@@ -1,5 +1,5 @@
-\section{setup.py}
-Die Datei 'setup.py' im Hauptverzeichnis des Projekts stellt das Installationsskript für strongMan dar. Zusätzlich enthält es noch einen migrate Befehl für das automatische Migrieren der Datenbank.
+\section{Installation script setup.py}
+The 'setup.py' file in the main directory of the project is the installation script for strongMan. Additionally to the setup commands, the script also provides a developer command to migrate the database automatically.
 
 \begin{lstlisting}[style=BashInputStyle]
 	 ./setup.py <command> [options]
@@ -8,7 +8,7 @@ Die Datei 'setup.py' im Hauptverzeichnis des Projekts stellt das Installationssk
 \begin{itemize}
 	\item -v | --verbose
 	\begin{itemize}
-	    \item Setzt die Ausgabe von setup.py auf verbose.
+	    \item Sets the output of setup.py to verbose.
 	\end{itemize}
 \end{itemize}
 
@@ -16,12 +16,12 @@ Die Datei 'setup.py' im Hauptverzeichnis des Projekts stellt das Installationssk
 \begin{lstlisting}[style=BashInputStyle]
 	 ./setup.py install [-p %python-interpreter%]
 \end{lstlisting}
-Macht strongMan bereit zur Ausführung. Richtet ein Python Virtualenv ein, installiert alle Requirements, migriert die Datenbank und kopiert alle statischen Dateien in einen Ordner.
+Makes strongMan ready to run. Sets up a virtualenv, install the requirements, migrates the database and copies the static files to the static-files folder.
 \begin{itemize}
 	\item -p | --python %python-interpreter%
 	\begin{itemize}
-	    \item Wähle einen spezifischen Python Interpreter für strongMan
-	    \item Python3 wird als Standartwert genutzt, wenn nichts angegeben.
+	    \item Select a specific python interpreter to run strongMan
+	    \item python3 is used as default value for %python-interpreter%
 	\end{itemize}
 \end{itemize}
 
@@ -29,30 +29,32 @@ Macht strongMan bereit zur Ausführung. Richtet ein Python Virtualenv ein, insta
 \begin{lstlisting}[style=BashInputStyle]
 	 ./setup.py uninstall
 \end{lstlisting}
-Versetzt die strongMan Applikation in den gleichen Zustand wie vor der Installation. Entfernt das Virtualenv und löscht die statischen Dateien.
+Undos the installation. Puts the application to the same status as before the installation. Removes the virtualenv and deletes all static files.
 
 \subsubsection{add-service}
 \begin{lstlisting}[style=BashInputStyle]
 	 sudo ./setup.py add-service
 \end{lstlisting}
-Fügt einen Systemd service für strongMan hinzu. Der Service ist gleich enabled und gestartet. Zusätzlich zum Service wird ein Launcher Icon hinzugefügt, der http://localhost:1515 mit dem Standartbrowser öffnet.\\
+Adds strongMan as a systemd service. The service will be enable and started. Additionaly to the service, the script creates a desktop icon in the launcher which opens a webbrowser with the url http://localhost:1515.\\
 
-Es werden Root Rechte benötigt, um Änderungen am Systemd zu machen.
+You need root permissions to make changes in systemd.
 
 \subsubsection{remove-service}
 \begin{lstlisting}[style=BashInputStyle]
 	 sudo ./setup.py remove-service
 \end{lstlisting}
-Entfernt den Systemd Service und das Launcher Icon.
+Removes the systemd service and the launcher icon.
+
+You need root permissions to make changes in systemd.
 
 \subsubsection{migrate}
 \begin{lstlisting}[style=BashInputStyle]
 	 ./setup.py migrate [-dm]
 \end{lstlisting}
-Migriert die Django Datenbank, wenn Änderungen vorhanden sind. Siehe Django Migrations\footnote{\url{https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici}}.
+Migrates the database if changes are available. Have a look on Django Migrations\footnote{\url{https://github.com/strongswan/strongswan/tree/master/src/libcharon/plugins/vici}}.
 \begin{itemize}
 	\item -dm | --delete-migrations
 	\begin{itemize}
-	    \item Löscht alle alten Migrationsskripte und die Sqlite Datenbank.
+	    \item Deletes all old migrations scripts and the sqlite database. All data are lost!
 	\end{itemize}
 \end{itemize}

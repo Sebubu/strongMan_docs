@@ -32,6 +32,52 @@ Die Tabelle Konfiguration beschreibt einige Key Parameter, welche durch die stro
 
 \subsubsection{IKEv2 Certificate}
 Die Authentisierung zwischen Client und Server findet auf Basis eines X.509 Zertifikats und privater RSA/ECDSA Schlüssel statt.\\
+\nolinebreak
+\nopagebreak
+\noindent\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Eingabefelder}\mbox{}\medskip
+    \begin{figure}[H]
+    	\centering
+    	\includegraphics[width=200pt]{images/ike_cert.png}
+    	\caption{IKEv2 Certificate}
+    \end{figure}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\vspace{0pt}
+\paragraph{Beschreibung}\mbox{}\\
+\subsubsection{Name}
+\hspace*{18pt}Ordered Dictionary: 'Bezeichner'\\
+Eindeutige Bezeichnung für die Verbindung \\
+
+\subsubsection{Server}
+\hspace*{18pt}Ordered Dictionary: remote\_addrs\\
+Hostname oder IP des Servers\\
+
+\subsubsection{User certificate}
+\hspace*{18pt}Ordered Dictionary: local.certs\\
+Auswahl der Benutzerzertifikate. Im ordered Dictionary wird der komplette DER-Container in Binärer Form übermittelt.\\
+
+\subsubsection{Identitiy}
+\hspace*{18pt}Ordered Dictionary: local.certs\\
+Auswahl der Benutzerzertifikate. Im ordered Dictionary wird der komplette DER-Container in Binärer Form übermittelt.\\
+
+\subsubsection{User certificate}
+\hspace*{18pt}Ordered Dictionary: local.id\\
+Auswahl zwischen Subject Alternative Name und Distinguished Name. Standardmässig wird der Distinguished Name gesetzt, somit wird nur bei Auswahl eines Subject Alternative Name die local.id in das ordered Dictionary geschrieben.\\
+
+\subsubsection{CA/Server certificate}
+\hspace*{18pt}Ordered Dictionary: remote.cacerts\\
+Wenn 'Choose automatically'  werden alle CA/Server Zertifikate an den strongSwan übergeben, 
+
+\subsubsection{Identity}
+\hspace*{18pt}Ordered Dictionary: remote.id\\
+Bezeichner für die Server identifikation. Per Default wird der \textbf{Server} Eintrag übernommen. Ansonsten auch manuell setzbar.\\
+
+\end{minipage}
+\newpage
+
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \paragraph{Client}\mbox{}\medskip

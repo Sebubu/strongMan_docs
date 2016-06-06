@@ -66,8 +66,8 @@ check\_instance macht entsprechende Instanzprüfungen.\\
 \end{python}
 
 \begin{lstlisting}[style=BashInputStyle]
-    is Authentication: True
-    is CaCertificateAuthentication: True
+    is instance of Authentication: True
+    is instance of CaCertificateAuthentication: True
 \end{lstlisting}    
 Erstellt ein  CaCertificateAuthentication Objekt und speichert es in der Datenbank ab. Wie an der Ausgabe ersichtlich ist, ist es vom Typ der Subklasse CaCertificateAuthentication.\\
 
@@ -76,8 +76,8 @@ Erstellt ein  CaCertificateAuthentication Objekt und speichert es in der Datenba
     check_instance(loaded_auth)
 \end{python}
 \begin{lstlisting}[style=BashInputStyle]
-    is Authentication: True
-    is CaCertificateAuthentication: False
+    is instance of Authentication: True
+    is instance of CaCertificateAuthentication: False
 \end{lstlisting} 
 
 Lese nun das Objekt wieder aus der Datenbank. Die Ausgabe zeigt, dass es sich nun nur im die Basisklasse und nicht um die Subklasse handelt. Die Umwandlung in die Subklasse ist somit Aufgabe des Programmieres,

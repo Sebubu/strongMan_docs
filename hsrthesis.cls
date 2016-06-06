@@ -55,6 +55,7 @@
 \usepackage{dirtree}
 \usepackage[titletoc,toc,page]{appendix}
 \usepackage[nottoc,notlot,notlof,numbib]{tocbibind}
+\usepackage{wrapfig}
 
 %Title Styling
 %\titlespacing{command}{left spacing}{before spacing}{after spacing}[right]

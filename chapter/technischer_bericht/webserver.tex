@@ -1,0 +1,56 @@
+\subsection{Webserver}
+Django ist ein Webframework und muss somit mit einem Webserver betrieben werden.
+Im Entwicklungsmodus kann der Django interne Webserver verwendet werden:
+\begin{lstlisting}[style=BashInputStyle]
+	 python manage.py runserver --settings=strongMan.settings.local
+\end{lstlisting}
+
+\medskip
+
+In der Produktionsumgebung rät das Django Team jedoch von der Verwendung des internen Webservers ab\footnote{\url{https://docs.djangoproject.com/en/1.9/ref/django-admin/\#runserver}}. Der interne Server sei nicht auf Vulnerabilities getestet und ist somit unsicher.
+
+
+\subsubsection{Produktionsumgebung}
+Jedes Djangoprojekt enhält standardmässig eine WSGI \cite{wsgi} Schnittstelle mit der man verschiedene Webserver anbinden kann. Die Schnittstelle in strongMan befindet sich unter strongMan/wsgi.py. \\
+
+\decision{Gunicorn - Statische Dateien} In diesem Projekt verwenden wir gunicorn \cite{gunicorn}. Gunicorn oder auch 'Green Unicorn' ist ein Python WSGI HTTP Server für Unix. Er verarbeitet die Webrequest die Django betreffen. Normalerweise verarbeitet Gunicorn aus Performancegründen keine statischen Daten wie Javascript, CSS, Bilder. Da es sich hier aber um eine Einzeluserapplikation handelt, haben wir uns trotzdem dazu entschieden, auch die statische Daten über Gunicorn auszuliefern. Ansonsten müsste ein richtiger Webserver wie Apache oder Nginx installiert und konfiguriert werden.
+
+Gunicorn wird einfach via pip installiert und kann danach im Terminal verwendet werden.\\
+
+\newpage
+
+Die Datei run.py im Hauptverzeichnis des Projekts startet den Gunicorn Server entsprechend in der Produktionsumgebung:
+
+\begin{lstlisting}[style=BashInputStyle]
+	 gunicorn --workers 6  --bind 0.0.0.0:1515 --env
+	 DJANGO_SETTINGS_MODULE=strongMan.settings.deployment 
+	 strongMan.wsgi:application
+\end{lstlisting}
+
+\begin{itemize}
+    \item --workers 6
+    \begin{itemize}
+        \item Startet 6 Threads zur Behandlung von Webrequest.
+    \end{itemize}
+    \item --bind 0.0.0.0:1515
+    \begin{itemize}
+        \item Beschreibt denn Socket, auf den gehört werden soll.
+    \end{itemize}
+    \item --env DJANGO\_SETTINGS\_MODULE
+    \begin{itemize}
+        \item Zeigt auf die entsprechende Django Settings Datei, die für die Produktionsumgebung genutzt wird.
+    \end{itemize}
+    \item strongMan.wsgi:application
+    \begin{itemize}
+        \item Die WSGI Schnittstelle
+    \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Betreibung von strongMan hinter einem Nginx Server}
+strongMan kann auch direkt hinter einem Nginx Webserver betrieben werden. Besonders wenn in strongMan der Serverteil implementiert ist und mehrere User auf die Applikation zugreifen, kann es aus Performanzgründen Sinn machen, den Nginx Server vor Gunicorn heranzustellen. Der Nginx Server liefert in diesem Fall dann die statischen Daten wie Javascript, CSS, Bild Dateien aus und Gunicorn kümmert sich um die dynamischen Daten in der Django Applikation.
+
+Eine Anleitung zur Konfiguration von Nginx, Gunicorn und Django findet man unter \cite{nginx-gunicorn}
+
+
+
