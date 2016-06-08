@@ -35,14 +35,13 @@ class AboutViewsTests(TestCase):
 
 \paragraph{Docker} Um die strongSwan Konfiguration direkt zu testen, wird docker-compose eingesetzt. Docker-compose gewährleistet mehrere Docker Container zu builden, ein Netzwerk untereinander und somit einen IPsec Tunnel aufzubauen. \\
 \decision{Toolstack CI}
-Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mit Hilfe von docker-compose. Travis CI unterstützt docker-compose und lässt sich nahtlos mit GitHub kombinieren. Diese Technologien sind uns schon bekannt und werden kostenlos zur Verfügung gestellt.
-
+Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mit Hilfe von docker-compose. Travis CI unterstützt docker-compose und lässt sich nahtlos mit GitHub kombinieren. Diese Technologien sind uns schon bekannt und werden kostenlos zur Verfügung gestellt.\\
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=420pt]{images/testing.png}
 \caption[Schematische Darstellung der Testumgebung]{Schematische Darstellung der Testumgebung}
-\end{figure}
+\end{figure}\medskip
 \subsubsection{Ablauf}
 \begin{enumerate}
 	\item git push, lokaler Code wird auf GitHub publiziert.

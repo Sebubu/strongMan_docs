@@ -17,7 +17,7 @@ Kritische Daten sind das Passwort für den Benutzer/Adminstrator, die Private Ke
 
 \paragraph{Weitere Schutzmassnahmen}
 \begin{itemize}
-	\item Die Applikation sollte vor SQL Injection sicher sein
+	\item Die Applikation muss vor SQL Injection sicher sein
 	\item Um vor Cross Site Attacken sicher zu sein, werden CSFR Tokens verwendet
 \end{itemize}
 
@@ -68,11 +68,9 @@ Server: Die Anwendung muss mithilfe eines Django kompatiblen Webservers zum lauf
 
 Client: Auf dem Client muss ein aktueller Browser mit HTML5 und Javascript Unterstützung installiert sein. Die Applikation wird mit Google Chrome 49 und Firefox 45 getestet.
 
-\paragraph{Schnittstellen}
-Die Anwendung hat keine Schnittstellen gegen aussen.
 
 \paragraph{Internationalization}
-Die Applikation unterstützt vorerst nur die englische Sprache.
+Die Applikation ist in der Englischen Sprache verfügbar.
 
 \paragraph{Testing}
 Die Hauptfunktionen im Projekt sollten mittels Unit Tests getestet werden. Die Haupt Use Cases müssen mit Integration Tests überprüft werden. Es sind keine Stresstests mit Loadtesting Frameworks wie Gatling vorgesehen.

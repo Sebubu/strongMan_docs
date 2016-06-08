@@ -24,7 +24,7 @@
 \marginparwidth = 0pt
 \hoffset = -60pt
 \topmargin = 0pt
-\voffset = -40pt
+\voffset = -20pt
 \textheight = 700pt
 
 % Including mostly used packages
@@ -210,3 +210,8 @@ showstringspaces=false            %
      \vskip 1cm
      }
    \fi
+   
+  %-------------------------------------
+%	MARGINS
+%-------------------------------------
+\usepackage[left=2.5cm,right=2.5cm,bottom=3cm]{geometry}

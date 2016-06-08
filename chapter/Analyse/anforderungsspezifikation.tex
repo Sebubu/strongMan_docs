@@ -16,36 +16,12 @@ Die Applikation wird von einem Standard-Nutzer verwendet. Dieser soll VPN Tunnel
 Der Server ist auf Systemadministratoren ausgerichtet. Es soll möglich sein, die VPN-Tunnels von strongSwan per grafischem Interface auf einem Server/Gateway zu konfigurieren.
 
 \subsection{Use Case}
-\subsubsection{Aktoren und Stakeholder}
-\begin{table}[H]
-\centering
-    \begin{tabular}{|p{3cm}|p{9cm}|}
-    \hline
-    \rowcolor{lightblue}
-    Aktor & Tätigkeit   \\ \hline
-	User  & 
-			\begin{itemize}
-			\item Konfiguriert VPN-Tunnel als Client
-    		\item Startet und stoppt VPN-Tunnel
-		\end{itemize}	
-	\\ \hline
-	Administrator & 
-			\begin{itemize}
-			\item Konfiguriert VPN-Tunnel als Server
-    		\item Startet und stoppt VPN-Tunnel
-		\end{itemize}	
-	\\ \hline
-	\end{tabular}
-    \caption[Aktoren und Stakeholder]{Aktoren und Stakeholder}
-\end{table}
-
-
 
 
 \subsubsection{Use Case Diagramm}
 \begin{figure}[H]
 \centering
-\includegraphics[width=350pt]{images/strongMan_usecase.png}
+\includegraphics[width=370pt]{images/usecases.jpg}
 \caption[Use Case Diagramm]{Use Case Diagramm}
 \end{figure}
 
@@ -75,6 +51,12 @@ Dem User wird eine Zertifikatsverwaltung zur Verfügung gestellt. Er kann Zertif
 
 \paragraph{UC08: Infoseite anzeigen}\mbox{} \\
 Die Informationsseite zeigt dem eingeloggten User verschieden Informationen des strongSwans zum Beispiel Version, installierte Plugins usw.
+
+\paragraph{UC09: Verbindung Statusinfos anzeigen}\mbox{} \\
+Die Statusinformationen zu einer Verbindung zeigt dem User Traffic Selektoren und den Input/Output Traffic.
+
+\paragraph{UC10: Verbindungslogs anzeigen}\mbox{} \\
+Zeigt die Loginformationen an, die beim Verbindungsauf- und abbau von strongSwan empfangen werden.
 
 \newpage
 

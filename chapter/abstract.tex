@@ -1,23 +1,20 @@
 \section{Abstract}
-Die strongSwan Open Source VPN Software ist weltweit im Einsatz. Es gibt schon länger die Nachfrage nach einer grafischen Managementoberfläche, welche das Konfigurieren und Starten von VPN Tunnels erleichtert.\\
+Die strongSwan Open Source VPN Software ist weltweit im Einsatz. Es besteht schon länger die Nachfrage nach einer grafischen Managementoberfläche, welche das Konfigurieren und Starten von IPsec Verbindungen erleichtert.\\
 Zur Umsetzung dieses Problems stellt strongSwan das Versatile IKE Configuration Interface (VICI) zur Verfügung, welches für diverse Programmiersprachen eine JSON-artige Schnittstelle bietet. \\
-Im Rahmen dieser Bachelorarbeit ist die Applikation strongMan entstanden, die auf dem Python Webframework Django basiert und seine Daten in einer eigenen Datenbank persistiert.\\
+Im Rahmen dieser Bachelorarbeit ist die Applikation strongMan entstanden, die auf dem Python Webframework Django basiert.\\
 
-Die kurze Installation, welche optional auch einen systemd Service beinhaltet. Nach dem Userlogin kann über das Webinterface verschiedene IPsec Verbindungen konfiguriert werden. Der Benutzer kann zwischen mehreren vordefinierten IKEv2 Authentisierungsmethoden auswählen und dann mithilfe eines benutzerfreundlichen Formulars den Tunnel in zwei Schritten konfigurieren. 
-
-Wird eine Verbindung auf der Hauptübersicht gestartet, wandelt strongMan die Konfiguration in ein Dictionary um und übergibt es mit den entsprechenden Daten dem VICI Interface. Sobald die Verbindung steht, stehen Informationen über Traffic Selectoren und Dateninput und Output zur Verfügung.
-
-Auf der About Seite sind weitere Informationen über strongSwan und seine installierten Plugins aufgelistet.\\
+Der strongMan unterstützt eine benutzerfreundliche Konfiguration diverser Internet Key Exchange (IKEv2) Authentisierungsmethoden, welche in einer Datenbank persistiert werden. Diese können auf der Hauptübersicht bearbeitet werden. Weiter lassen sich diese Verbindungen auf- und abbauen. Das Starten hat zur Folge, dass der strongMan die Konfigurationsdaten in ein Dictionary umwandelt und dem strongSwan per Unix Socket über die VICI-Schnittstelle übergibt. Ist die Verbindung erfolgreich etabliert werden Statusinformationen zu Traffic Selectoren, sowie Datenin- und Output dargestellt. Parallel dazu werden die Logmessages des strongSwan ausgelesen und visualisiert.\\
 
 \begin{wrapfigure}{r}{0.5\textwidth}
   \begin{center}
-    \includegraphics[width=230px]{images/abstract_overview.jpg}
+    \includegraphics[width=230px]{images/strongman_ubersicht.jpg}
   \end{center}
     \caption[Übersicht]{Übersicht}
 \end{wrapfigure}
 
-Eine interne Zertifikatsverwaltung managt die Zertifikate und die privaten Schlüssel, welche von den Verbindungen gebraucht werden. Wichtige Felder wie der CName können direkt in der Zertifikatsvorschau eingesehen werden.\\
+Die interne Zertifikatsverwaltung ermöglicht den Upload von PKCS1, PKCS8, PKCS12 und X.509 Schlüsselkontainern. Diese werden in der Datenbank gespeichert, wobei alle sensitiven Daten verschlüsselt abgelegt werden. Nach dem Erfassen können wichtige Felder wie der Canonical Name (CNAME) direkt in der Zertifikatsvorschau eingesehen werden. Zusätzlich werden auch alle durch den strongSwan verwalteten Zertifikate in der strongMan Applikation dargestellt.\\
 
-Dieses Projekt legte einen starken Fokus auf die Usability der einzelne Ansichten und Formulare, was in einer überlegten Bedienbarkeit auch für unerfahrene Benutzer resultierte.\\
+Zusätzlich bietet eine Informationsseite Übersicht über die verwendete strongSwan Version und allen installierten Plugins.\\
 
-Die Applikation strongMan deckt zur Zeit nur Client Funktionalitäten ab. In einem nächsten Schritt ist es möglich die Anwendung so zu erweitern, dass auch Serverfunktionalitäten und somit IPsec Server konfiguriert werden können. Dies erfordert die weitere Implementierung von möglichen Konfigurationen für den Server, eine Oberflächenüberarbeitung zur Darstellung von einer grösseren Anzahl von Verbindungen/Zertifikaten, das Management von Child SA's und weitere Statistikinformationen.
+
+Der Fokus der strongMan Applikation zielt aktuell auf die Clientseite. In einem nächsten Schritt ist es möglich die Anwendung so zu erweitern, dass auch Serverfunktionalitäten hinzukommen. Dazu ist ein Administratormodus sinnvoll, der weitere Authentisierungsmethoden ermöglicht, die Konfigurationsmöglichkeiten ausbaut, zusätzliche Statusinformationen visualisiert und das Management von mehreren Security Associations (SA) implementiert. 

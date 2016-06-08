@@ -2,7 +2,7 @@
 \subsection{Log Messages}
 \subsubsection{Ausgangslage}
 Log Nachrichten werden beim  starten und stoppen von VPN Tunnels erzeugt und in der Datenbank gespeichert. \\
-Dieser Vorgang wird im Frontend gestartet und lösst im Backend einen Thread mit unbekannter Laufzeit aus. Dieser Thread interagiert mit der Vici Schnittstelle und erhält beim Auf-/Abbauen der Verbindungen einen Python Generator als Rückgabewert, welcher bei jeder Iteration ein ordered Dictionary mit Loginformationen enthält. Diese Logs werden nun bei jedem Iterationsschritt in der Datebank persistiert.\\ Dieser Prozess ist an den Verbindungsaufbau des strongSwans gekoppelt und kann daher bis zu mehreren Minuten andauern kann.
+Dieser Vorgang wird im Frontend gestartet und löst im Backend einen Thread mit unbekannter Laufzeit aus. Dieser Thread interagiert mit der Vici Schnittstelle und erhält beim Auf-/Abbauen der Verbindungen einen Python Generator als Rückgabewert, welcher bei jeder Iteration ein ordered Dictionary mit Loginformationen enthält. Diese Logs werden nun bei jedem Iterationsschritt in der Datebank persistiert.\\ Dieser Prozess ist an den Verbindungsaufbau des strongSwans gekoppelt und kann daher bis zu mehreren Minuten andauern kann.
 
 \subsubsection{Problematik}
 Das Frontend möchte nun jedoch möglichst in Echtzeit an diese Loginformationen kommen und nicht bis auf das Ende der Iterationen warten, sonder die einzelnen Iterationsschrite mitverfolgen.

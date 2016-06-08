@@ -3,13 +3,13 @@
 \subsubsection{Übersicht}
 Die strongMan Applikation ist webbasiert, der Aufbau gliedert sich in folgende Komponenten.
 
-\paragraph{Webbrowser} ist der Einstiegspunkt für den Benutzer und übernimmt die Darstellung mit Hilfe von HTML und CSS. Die Kommunikation findet per HTTP statt. Durch den Einsatz von Javascript ist auch ein wenig Logik eingebaut.  
+\paragraph{Webbrowser} ist der Einstiegspunkt für den Benutzer und übernimmt die Darstellung mit Hilfe von HTML und CSS. Die Kommunikation findet per HTTP statt. Durch den Einsatz von Javascript wirkt die Oberfläche auch flüssiger.
 
 \paragraph{Django Server} beinhaltet die eigentliche Business Logik,  stellt dem Webbrowser den Inhalt zur Verfügung, regelt die Kommunikation mit dem strongSwan per Unix Socket und nutzt zur Persisterung der Daten die Datenbank.
 
 \paragraph{Database} beinhaltet die Konfigurationsangaben, sowie die Zertifikate.
 
-\paragraph{strongSwan} baut die Ipsec-Tunnels auf und ab. Der Django Server nutzt die Vici-Schnittstelle um Konfiguration zu übergeben und die Verbindungen zu starten beziehungsweise zu stoppen. \\\\
+\paragraph{strongSwan} baut die IPsec-Tunnels auf und ab. Der Django Server nutzt die VICI-Schnittstelle um Konfiguration zu übergeben und die Verbindungen zu starten beziehungsweise zu stoppen. \\\\
 
 
 \begin{figure}[H]
@@ -22,13 +22,46 @@ Die strongMan Applikation ist webbasiert, der Aufbau gliedert sich in folgende K
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=420pt]{images/domain_model_strongman.png}
+\includegraphics[width=440pt]{images/domain_model.png}
 \caption[Domain Model]{Domain Model}
 \end{figure}
 
-Das Domain Model soll im Allgemeinen eine Abstraktion der Vici-Schnittstelle darstellen.
-Dabei ist die Connection Klasse zentral. Damit die verschiedenen Authentisierungsmethoden unterstütz werden können, wird von Connection geerbt.
+Das Domain Model teilt sich in drei Teile VICI, Certificates und Connections auf. Diese bauen dabei hierarchisch aufeinander auf.
 
-Weiter sind die Certificates ein essentieller Bestandteil, diese sind über die Hilfsklasse AbstractIdentity mit der Authentication verbunden, welche wiederum ein Verbindung zur Connection hat.
+\subsubsection{VICI}
+Das VICI Package beinhaltet den VICI Wrapper, der verschiedene Befehle aus der VICI Bibliothek in einen Befehl bündelt, sowie die Exception managet. Der Wrapper ist selbst für den Verbindungsauf- und Abbau zuständig und gibt nur bei Fehler Exceptions aus.
+
+\subsubsection{Certificates}
+Das Package Certificates beinhaltet die Klassen zur Zertifikatsverwaltung. Alle Schlüsselcontainer, die im Uploadfeld hinaufgeladen werden, werden mithilfe des ORM's abgespeichert. Die Hauptklasse des Packages sind UserCertificate, ViciCertificate und PrivateKey.
+
+
+\par
+\begingroup
+\leftskip=1.0cm 
+\noindent
+\paragraph{UserCertificate} Stellt ein X.509 Zertifikat das, das vom Benutzer hochgeladen wurde.
+\paragraph{ViciCertificate} Ein X.509 Zertifikat, das aus der VICI Schnittstelle gelesen wird.
+\paragraph{PrivateKey} Privater Schlüssel, der vom Benutzer geuploaded wurde und eine Verbindung zum entsprechenden UserCertificate hat.
+
+\paragraph{Identity} Eine Identity ist entweder ein subjectAltName oder ein distinguishedName. Es dient als Verbindungsstück zum Connection Package
+
+\par
+\endgroup
+
+
+
+\subsubsection{Connections}
+Das Connection Package ist im Allgemeinen eine Abstraktion der VICI-Schnittstelle. Um die verschieden Authentisierungsmethode abzubilden wird auf Vererbung gesetzt. Die Methode dict() stellt alle verbindungsrelevanten Einträge aus der Datenbank in einem ordered Dictionary zusammen, welche über den ViciWrapper an den strongSwan übergeben werden können. Durch start() und stop() werden die übertragenen IPsec Verbindungen auf- und abgebaut.
+
+\par
+\begingroup
+\leftskip=1.0cm 
+\noindent
+\paragraph{LogMessage} Wird verwendet um LogMessages über mehrere Threads zu verteilen.
+
+\paragraph{Secret} Bildet die Secret Section der VICI-Schnittstelle ab, dabei wird das data Feld Verschlüsselt in der Datenbank abgelegt. 
+
+\par
+\endgroup
 
 \newpage
