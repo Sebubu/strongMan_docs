@@ -1,5 +1,5 @@
 \section{Evaluation Usermanagement}
-Da mit Hilfe von stongSwan VPN Tunnels zu schützenswerten Daten ermöglicht werden, sollte auch die Applikation strongMan mit einer Authentifizierung versehen werden.
+Da mithilfe von stongSwan VPN Verbindungen zu schützenswerten Daten ermöglicht werden, sollte auch die Applikation strongMan mit einer Authentifizierung versehen werden.
 \subsubsection{Anforderungen}
 \begin{itemize}
 	\item Benutzer hat ohne sich einzuloggen keinen Zugriff auf die Applikation
@@ -28,10 +28,10 @@ Da mit Hilfe von stongSwan VPN Tunnels zu schützenswerten Daten ermöglicht wer
 \end{table}
 
 \decision{Evaluation Usermanagement}
-Durch das Vergleichen der verschieden Varianten und in Absprache mit den Betreuern hat sich ''Ein vorkonfigurierter Benutzer'' als Favorit herausgestellt. Dabei wir ein Standard Benutzer während der Installation der Applikation erstellt und dessen Passwort kann im Anschluss geändert werden. Die Optionen mit mehreren Benutzern wären schön, bedeuten aber einen grösseren Implemenationsaufwand.
+Durch das Vergleichen der verschieden Varianten und in Absprache mit den Betreuern hat sich ''Ein vorkonfigurierter Benutzer'' als Favorit herausgestellt. Dabei wir ein Standard Benutzer während der Installation der Applikation erstellt und dessen Passwort kann im Anschluss geändert werden. Die Optionen mit mehreren Benutzern wäre vor allem im Hinblick auf den Serverteil vorteilhaft, bedeuten aber einen grösseren Implemenationsaufwand.
 
 \section{Evaluation Zertifikatsbibliothek}
-Um VPN-Verbindungen mit Zertifikaten abzusichern, muss das strongSwan Management Interface mit Zertifikaten umgehen können. Dabei müssen verschiedene Formate unterstützt, ausgelesen und entsprechend ihrem Inhalt an die Vici-Schnittstelle geliefert werden.
+Um VPN Verbindungen mit Zertifikaten abzusichern, muss das strongMan mit Zertifikaten umgehen können. Dabei müssen verschiedene Formate unterstützt, ausgelesen und entsprechend ihrem Inhalt an die VICI-Schnittstelle geliefert werden.
 \subsubsection{ASN.1 Schemas}
 In der Welt der asymmetrischen Verschlüsslung werden alle nötigen Daten in einer ASN.1 Struktur abgelegt. Der ASN.1 Standard stellt Datentypen und Datenstrukturen zur Verfügung, um Informationen mittels Schemas abzulegen. Über die Zeit sind verschiedene RFC’s entstanden, die ASN.1 Schemas definieren. Unten aufgelistet sind die Standards, welche wir in unserem Projekt berücksichtigen. \\
 
@@ -41,10 +41,10 @@ In der Welt der asymmetrischen Verschlüsslung werden alle nötigen Daten in ein
     \hline
     \rowcolor{lightblue}
     Standard & Inhalt & Forderung   \\ \hline
-	PKCS\#1	&	Private Schlüssel der verschiedene Algorithmen RSA, DSA, ECDSA. Können mit einem Passwort verschlüsselt sein.	& Muss \\ \hline	
+	PKCS\#1	&	Private Schlüssel der verschiedene Algorithmen RSA, DSA und ECDSA. Können mit einem Passwort verschlüsselt sein.	& Muss \\ \hline	
 		PKCS\#8	&	Gleich wie PKCS\#1, zusätzlich mit einem Feld, der den Algorithmus beschreibt.	& Muss \\ \hline	
 		X.509	&	Zertifikatsstandard mit allen Informationen zum Eigner (Unverschlüsselt).	& Muss \\ \hline
-		PKCS\#12	&	Container mit Zertifikaten und Private Keys. Kann verschlüsselt sein.	& Kann \\ \hline		
+		PKCS\#12	&	Container mit Zertifikaten und privaten Schlüsseln. Kann verschlüsselt sein.	& Kann \\ \hline		
 	\end{tabular}
     \caption[ASN.1 Schemas]{ASN.1 Schemas}
 \end{table}
@@ -66,11 +66,11 @@ Base64 encodet in ASCII Zeichen (Dateiendung .pem). Openssl nutzt PEM als Standa
 \end{table}
 
 \subsubsection{Verschlüsslung}
-Die Dateien mit Private Keys (PKCS\#1, PKCS\#8 und PKCS\#12) können verschlüsselt sein. Dabei kommen verschiedene symmetrische Verschlüsslungen zum Einsatz, die mit einem Userpasswort entschlüsselt werden.
+Die Dateien mit Private Keys (PKCS\#1, PKCS\#8 und PKCS\#12) können verschlüsselt sein. Dabei kommen verschiedene symmetrische Verschlüsslungen zum Einsatz, die mit einem Passwort entschlüsselt werden.
 
 
 \subsubsection{Anforderungen}
-In dieser Evaluation soll eine Python Crypto Bibliothek gefunden werden, mit der man grundlegende Informationen wie CNAME und ASN.1 Schema auslesen kann. Mit Hilfe der Anforderungen im Anschluss soll eine passende Bibliothek gefunden werden.
+In dieser Evaluation soll eine Python Crypto Bibliothek gefunden werden, mit der man grundlegende Informationen wie CNAME und ASN.1 Schema auslesen kann. Mithilfe der Anforderungen im Anschluss soll eine passende Bibliothek gefunden werden.
 
 \paragraph{Muss Anforderungen}
 \begin{itemize}
@@ -112,7 +112,7 @@ In dieser Evaluation soll eine Python Crypto Bibliothek gefunden werden, mit der
     \caption[Pyasn1]{Pyasn1}
 \end{table}
 \medskip
-Pyasn1 stellt einzelnen ASN.1 Schemas für die dekodierung von ASN.1 Dateien zur Verfügung. Einzelne Standards wie X.509 sind schon implementiert, jedoch ist man selbst verantwortlich, das richtige Schema zu der entsprechenden Datei zu finden. Das API ist sehr kompliziert und der Programmieraufwand für die Unterstützung aller nötigen Formate ist gross.\\
+Pyasn1 stellt einzelnen ASN.1 Schemas für die Dekodierung von ASN.1 Dateien zur Verfügung. Einzelne Standards wie X.509 sind schon implementiert, jedoch ist man selbst verantwortlich, das richtige Schema zu der entsprechenden Datei zu finden. Das API ist sehr kompliziert und der Programmieraufwand für die Unterstützung aller nötigen Formate ist gross.\\
 
 
 \subsubsection{Cryptography \cite{cryptography}}
@@ -136,7 +136,7 @@ Pyasn1 stellt einzelnen ASN.1 Schemas für die dekodierung von ASN.1 Dateien zur
     \caption[Cryptography]{Cryptography}
 \end{table}
 \medskip
-Cryptography ist ein Python Bibliothek mit dem Fokus auf komfortabler Cryptography in Python. Es hat eine tolle Unterstützung für X.509 Zertifikate. Man kann Private Keys generieren, ein CSR erstellen und sogar CSR signieren. Im Hintergrund verwendet es OpenSSL. Nichts desto trotz bietet es keinen Support ausserhalb vom X.509 und ist somit unbrauchbar für unsere Zwecke.\\
+Cryptography ist eine Python Bibliothek mit dem Fokus auf komfortable Kryptografie in Python. Es hat eine tolle Unterstützung für X.509 Zertifikate. Man kann Private Keys generieren, ein CSR erstellen und sogar CSR signieren. Im Hintergrund verwendet es OpenSSL. Nichts desto trotz bietet es keinen Support ausserhalb vom X.509 und ist somit unbrauchbar für unsere Zwecke.\\
 
 
 \subsubsection{Pycrypto \cite{pycrypto}}
@@ -187,5 +187,5 @@ Pycrypto unterstützt alle geforderten Formate inklusive Verschlüsslung. Es bas
 Oscrypto ist eine neu entstandene Crypto Bibliothek für Python. Es unterstützt alle nötigen Formate inklusive Verschlüsslung. Die meisten Funktionen können ohne die OpenSSL Bibliothek im Hintergrund verwendet werden. Mit wenigen Befehlen kann oscrypto alle nötigen Formate lesen.\\\\
 
 \decision{Evaluation Zertifikatsbibliothek}
-Der Entscheid fiel klar auf oscrypto. Oscrypto ist eine pure Python Bibliothek, welche verschiedene Cryptofunktionen anbietet. Für das Parsen und Lesen von Keycontainern wrappt oscrypto die asn1crypto Bibliothek (auch pure Python). Für andere Cryptofunktionen wrappt oscrypto die standartmässig installierte OpenSSL Library, welche wir in dieser Arbeit aber nicht brauchen.
-Mit Hilfe dieser Library ist nun ein komfortables Arbeiten mit allen oben aufgeführten Keycontainern möglich, ohne Abhängigkeiten ausserhalb von Python zu haben.
+Der Entscheid fiel klar auf oscrypto. Oscrypto ist eine pure Python Bibliothek, welche verschiedene Kryptografiefunktionen anbietet. Für das Parsen und Lesen von Keycontainern wrappt oscrypto die asn1crypto Bibliothek (auch pure Python). Für andere Kryptografiefunktionen wrappt oscrypto die standartmässig installierte OpenSSL Library, welche wir in dieser Arbeit aber nicht benötigen.
+Mithilfe dieser Library ist nun ein komfortables Arbeiten mit allen oben aufgeführten Keycontainern möglich, ohne Abhängigkeiten ausserhalb von Python zu haben.

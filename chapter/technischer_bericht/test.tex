@@ -24,18 +24,18 @@ class AboutViewsTests(TestCase):
 \subsection{Continuous Integration (CI)}
 \subsubsection{Anforderungen}
 \begin{itemize}
-	\item Aufbau von IPsec Tunnel zwischen mindesten zwei Rechnern
+	\item Aufbau von IPsec Tunnels zwischen mindesten zwei Rechnern
 	\item automatisierter Ablauf
 	\item geringe Einarbeitungszeit in Technologien
 	\item möglichst kostenfreie Dienste nutzen
 \end{itemize}
 \subsubsection{Tools}
 \paragraph{GitHub} wird von uns als online Repository verwendet und wird mit dem Versionsverwaltungssystem Git eingesetzt. Weiter bietet es für andere Dienste WebHooks an. 
-\paragraph{Travis CI} wird als eigentlicher Continuous Integration Anbieter verwendet. Es ermöglicht automatisierte Builds und Tests. Travis CI ist für Projekte, welche auf GitHub gehostet werden ausgelegt.
+\paragraph{Travis CI} wird als eigentlicher Continuous Integration Anbieter verwendet. Es ermöglicht automatisierte Builds und Tests. Travis CI ist für Projekte, welche auf GitHub gehostet werden, ausgelegt.
 
 \paragraph{Docker} Um die strongSwan Konfiguration direkt zu testen, wird docker-compose eingesetzt. Docker-compose gewährleistet mehrere Docker Container zu builden, ein Netzwerk untereinander und somit einen IPsec Tunnel aufzubauen. \\
 \decision{Toolstack CI}
-Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mit Hilfe von docker-compose. Travis CI unterstützt docker-compose und lässt sich nahtlos mit GitHub kombinieren. Diese Technologien sind uns schon bekannt und werden kostenlos zur Verfügung gestellt.\\
+Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mithilfe von docker-compose. Travis CI unterstützt docker-compose und lässt sich nahtlos mit GitHub kombinieren. Diese Technologien sind uns schon bekannt und werden kostenlos zur Verfügung gestellt.\\
 
 \begin{figure}[H]
 \centering

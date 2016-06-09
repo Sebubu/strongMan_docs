@@ -1,7 +1,7 @@
 \subsection{Subklassen}
 \label{subklassen}
 \subsubsection{Ausgangslage}
-Um die diversen Authentiserungsmethoden sowohl in der Datenbank, wie auch in unseren Models widerzuspiegeln, setzen wir auf Vererbung. Wird in Django Vererbung beim Models eingesetzt wird standardmässig "Multi-table inheritance" verwendet. Das heisst, es gibt für jede Subklasse eine weiter Tabelle in der Datenbank.
+Um die diversen Authentiserungsmethoden sowohl in der Datenbank, wie auch in unseren Models widerzuspiegeln, setzen wir auf Vererbung. Wird in Django Vererbung beim Models eingesetzt, wird standardmässig "Multi-table inheritance" verwendet. Das heisst, es gibt für jede Subklasse eine weiter Tabelle in der Datenbank.
 
 \subsubsection{Beispiel Vererbung}
 Beispiel Code in Django um die Vererbung zu demonstrieren.
@@ -45,7 +45,7 @@ Dies führt zu folgenden Tabellen in der Datenbank:\\
 \medskip
 
 \subsubsection{Problematik}
-Ein Django Fremdschlüssel referenziert sich immer auf eine spezifische Klasse. Ein Fremdschlüssel auf eine eine Klasse mit mehreren Subklassen, referenziert somit immer auf die Baseklasse. Die Auflösung des Fremdschlüssels gibt immer die Basisklasse zurück, nicht direkt die Subklasse. Aus diesem Grund musste ein Workaround implementiert werden, der die Basisklasse wenn möglich in die Subklasse umwandelt.
+Ein Django Fremdschlüssel referenziert immer auf eine spezifische Klasse. Ein Fremdschlüssel auf eine Klasse mit mehreren Subklassen, referenziert somit immer die Baseklasse. Die Auflösung des Fremdschlüssels gibt immer die Basisklasse zurück, nicht direkt die Subklasse. Aus diesem Grund musste ein Workaround implementiert werden, der die Basisklasse wenn möglich in die Subklasse umwandelt.
 
 Das gleiche Problem ergibt sich, wenn anhand der ID aus einem Formular auf das spezifische Objekt zugegriffen werden muss.
 \\

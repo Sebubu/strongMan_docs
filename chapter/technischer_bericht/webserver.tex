@@ -48,7 +48,7 @@ Die Datei run.py im Hauptverzeichnis des Projekts startet den Gunicorn Server en
 
 
 \subsubsection{Betreibung von strongMan hinter einem Nginx Server}
-strongMan kann auch direkt hinter einem Nginx Webserver betrieben werden. Besonders wenn in strongMan der Serverteil implementiert ist und mehrere User auf die Applikation zugreifen, kann es aus Performanzgründen Sinn machen, den Nginx Server vor Gunicorn heranzustellen. Der Nginx Server liefert in diesem Fall dann die statischen Daten wie Javascript, CSS, Bild Dateien aus und Gunicorn kümmert sich um die dynamischen Daten in der Django Applikation.
+strongMan kann auch direkt hinter einem Nginx Webserver betrieben werden. Besonders wenn in strongMan der Serverteil implementiert ist und mehrere User auf die Applikation zugreifen, kann es aus Performanzgründen Sinn machen, den Nginx Server vor Gunicorn heranzustellen. Der Nginx Server liefert in diesem Fall die statischen Daten wie Javascript, CSS, Bild Dateien aus und Gunicorn kümmert sich um die dynamischen Daten in der Django Applikation.
 
 Eine Anleitung zur Konfiguration von Nginx, Gunicorn und Django findet man unter \cite{nginx-gunicorn}
 

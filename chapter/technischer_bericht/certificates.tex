@@ -1,5 +1,5 @@
 \subsection{Zertifikate}
-Um IPsec Verbindungen mit asymmetrischen Schlüsseln zu erstellen, müssen Schlüssel verwaltet werden. strongMan persistiert die geuploadeten Schlüsselcontainer in der Datenbank.
+Um IPsec Verbindungen mit asymmetrischen Schlüsseln zu erstellen, müssen Schlüssel verwaltet werden. strongMan persistiert geuploadeten Schlüsselcontainer in der Datenbank.
 Dabei werden folgende Schlüsselcontainer Formate unterstützt: \\
 
 \begin{tabular}{ | p{0.2\textwidth} | p{0.7\textwidth} | }
@@ -20,7 +20,7 @@ Die Applikation hat ein Uploadfeld um Schlüsselcontainer hinzuzufügen. Dabei m
 Werden bestehende Zertifikate oder Private Keys nochmals geuploadet, erkennt die Zertifikatsverwaltung dies und verweigert den Upload. Das Matching wird anhand des Public Keys vorgenommen. Bei Zertifikaten wird der Public Key und die Version gematcht.
 
 \paragraph{Zertifikate in Gebrauch}
-Ist ein Zertifikat in einer Konfiguration ausgewählt, so kann das Zertifikat nicht gelöscht werden. Das Zertifikat muss zuerst deselektiert werden, um es aus der Zertifikatsverwaltung zu löschen.
+Ist ein Zertifikat in einer Verbindungskonfiguration ausgewählt, so kann das Zertifikat nicht gelöscht werden. Das Zertifikat muss zuerst deselektiert werden, um es aus der Zertifikatsverwaltung zu löschen.
 
 
 

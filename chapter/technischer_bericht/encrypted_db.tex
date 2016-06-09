@@ -7,7 +7,7 @@ Nach einer Besprechung mit unserem Betreuer, haben wir uns auf die Verschlüsslu
 Das Projekt  Django Fernet-Fields \cite{fernet-fields} stellt ein angepasstes Datenbankfeld EncryptedField zur Verfügung, das als Django ORM Feld verwendet werden kann. Django kann Klartext in EncryptedField schreiben und wieder Klartext daraus lesen. Das EncryptedField übernimmt das ganze Verschlüsslungsmanagement. In der Datenbank sind nur kryptische Zeichen zu finden.
 
 \subsubsection{Anpassung des Fernet-Fields}
-Das Fernet-Field Projekt benötigt die Python Bibliothek Cryptography\footnote{\url{https://cryptography.io/en/latest/fernet/}}, welche wiederum C++ Code während der Installation kompilieren muss. Um dies zu vermeiden und um die Installation zu vereinfachen, haben wir die EncryptedField Klasse leicht angepasst, damit diese pyaes  nutzt und wir die Abhängigkeit zur Cryptography verlieren.
+Das Fernet-Field Projekt benötigt die Python Bibliothek Cryptography\footnote{\url{https://cryptography.io/en/latest/fernet/}}, welche wiederum C++ Code während der Installation kompilieren muss. Um dies zu vermeiden und um die Installation zu vereinfachen, haben wir die EncryptedField Klasse leicht angepasst, damit diese Pyaes nutzt und wir die Abhängigkeit zu Cryptography verlieren.
 
 Beim ersten Start von strongMan generiert base.py einen neuen Secret Key\footnote{https://gist.github.com/ndarville/3452907} und schreibt diesen in die Datei db\_key.txt.
 EncryptedField benutzt diesen Secret Key und verschlüsselt die Daten mit AES256.

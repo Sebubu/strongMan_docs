@@ -1,16 +1,19 @@
 \newpage
 \subsection{Log Messages}
 \subsubsection{Ausgangslage}
-Log Nachrichten werden beim  starten und stoppen von VPN Tunnels erzeugt und in der Datenbank gespeichert. \\
-Dieser Vorgang wird im Frontend gestartet und löst im Backend einen Thread mit unbekannter Laufzeit aus. Dieser Thread interagiert mit der Vici Schnittstelle und erhält beim Auf-/Abbauen der Verbindungen einen Python Generator als Rückgabewert, welcher bei jeder Iteration ein ordered Dictionary mit Loginformationen enthält. Diese Logs werden nun bei jedem Iterationsschritt in der Datebank persistiert.\\ Dieser Prozess ist an den Verbindungsaufbau des strongSwans gekoppelt und kann daher bis zu mehreren Minuten andauern kann.
+Beim Klick auf den Toogle Button, der eine Verbindung zu starten versucht, löst der Webbrowser eine Ajax Request zum Server aus. Dieser blockierende Aufruf lädt die Verbindungskonfiguration in das VICI Interface, startet diese und wartet dann auf Log Messages. Dieser Vorgang kann mehrere Minuten dauern.
+
 
 \subsubsection{Problematik}
-Das Frontend möchte nun jedoch möglichst in Echtzeit an diese Loginformationen kommen und nicht bis auf das Ende der Iterationen warten, sonder die einzelnen Iterationsschrite mitverfolgen.
+Der Webbrowser möchte möglichst in Echtzeit an diese Loginformationen. Eine mehrere Minuten dauernde Wartezeit (Freeze) kann dem Benutzer nicht zugemutet werden.
 
 \subsubsection{Lösungsansatz}
-Beim aufruf der Connections Seite wird einen HTTP Long Polling Request ausgelösst, der zuest alle Logs, die älter als 5 Minuten sind, aus der Datenbank löscht und die restlichen dem Frontend zurück gibt. Dies führt dazu, dass ein neuer Request gestartet wird, welcher den neusten Log als Parameter mit gibt und nun nur noch neuere Logs übermittelt werden. Das ganze wird wiederholt, bis die Connections Seite verlassen wird.\\
+Die Lösung des Problems bietet die Aufsplittung in zwei verschiedene Ajax Requests. Der erste Request startet die Verbindung und persistiert die empfangenen Log Messages in die Datenbank. Dies Aufruf dauert weiterhin bis zu mehrere Minuten.
+
+Der zweite Request dient der Aktualisierung der Oberfläche, respektive der Anzeige der Log Messages.
+Beim Aufruf der Connections Seite wird dieser HTTP Long Polling Request ausgelöst, der die neusten Log Messages zurück gibt. Dieser Request wird dauernd wiederholt, um die Logs auf dem neusten Stand zu halten. Log Messages älter als 5 Minuten werden aus der Datenbank gelöscht. \\
 \begin{figure}[H]
 \centering
-\includegraphics[width=400pt]{images/log_messages_seq.png}
+\includegraphics[width=360pt]{images/log_messages_seq.png}
 \caption[Log Messages Sequenzdiagramm]{Log Messages Sequenzdiagramm}
 \end{figure}
