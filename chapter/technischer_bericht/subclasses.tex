@@ -1,7 +1,7 @@
 \subsection{Subklassen}
 \label{subklassen}
 \subsubsection{Ausgangslage}
-Um die diversen Authentiserungsmethoden sowohl in der Datenbank, wie auch in unseren Models widerzuspiegeln, setzen wir auf Vererbung. Wird in Django Vererbung beim Models eingesetzt, wird standardmässig "Multi-table inheritance" verwendet. Das heisst, es gibt für jede Subklasse eine weiter Tabelle in der Datenbank.
+Um die diversen Authentiserungsmethoden sowohl in der Datenbank, wie auch in unseren Models widerzuspiegeln, setzen wir auf Vererbung. Wird in Django Vererbung beim Models eingesetzt, wird standardmässig \textbf{Multi-table inheritance} verwendet. Das heisst, es gibt für jede Subklasse eine weiter Tabelle in der Datenbank.
 
 \subsubsection{Beispiel Vererbung}
 Beispiel Code in Django um die Vererbung zu demonstrieren.
@@ -45,7 +45,7 @@ Dies führt zu folgenden Tabellen in der Datenbank:\\
 \medskip
 
 \subsubsection{Problematik}
-Ein Django Fremdschlüssel referenziert immer auf eine spezifische Klasse. Ein Fremdschlüssel auf eine Klasse mit mehreren Subklassen, referenziert somit immer die Baseklasse. Die Auflösung des Fremdschlüssels gibt immer die Basisklasse zurück, nicht direkt die Subklasse. Aus diesem Grund musste ein Workaround implementiert werden, der die Basisklasse wenn möglich in die Subklasse umwandelt.
+Ein Django Fremdschlüssel referenziert immer auf eine spezifische Klasse. Im Falle einer Klasse mit Subklassen referenziert der Fremdschlüssel somit immer auf die Basisklasse. Die Auflösung des Fremdschlüssels gibt immer die Basisklasse zurück, nicht direkt die Subklasse. Aus diesem Grund musste ein Workaround implementiert werden, der die Basisklasse wenn möglich in die Subklasse umwandelt.
 
 Das gleiche Problem ergibt sich, wenn anhand der ID aus einem Formular auf das spezifische Objekt zugegriffen werden muss.
 \\
@@ -58,7 +58,7 @@ Dies könnte wie folgt aussehen. CaCertificateAuthentication ist eine Subklasse 
         print("is instance of CaCertificateAuthentication: " + 
             str(isinstance(ca_auth, CaCertificateAuthentication)))
 \end{python}
-check\_instance macht entsprechende Instanzprüfungen.\\
+Die Funktion \textbf{check\_instance} macht entsprechende Instanzprüfungen.\\
 
 \begin{python}
     ca_auth = CaCertificateAuthentication()
@@ -80,11 +80,10 @@ Erstellt ein  CaCertificateAuthentication Objekt und speichert es in der Datenba
     is instance of Authentication: True
     is instance of CaCertificateAuthentication: False
 \end{lstlisting} 
-
-Lese nun das Objekt wieder aus der Datenbank. Die Ausgabe zeigt, dass es sich nun nur im die Basisklasse und nicht um die Subklasse handelt. Die Umwandlung in die Subklasse ist somit Aufgabe des Programmieres,
-
-\medskip
+Das Objekt wird nun wieder aus der Datenbank gelesen. Die Ausgabe zeigt, dass es sich nun nur um die Basisklasse und nicht um die Subklasse handelt. Die Umwandlung in die Subklasse ist somit Aufgabe des Programmierers.\\
 Das geladene Objekt ist von Typ Authentication. Falls hinter dieser \textbf{id} jedoch noch eine Spezialisierung stecken würde, sieht man dies dem Objekt nicht an.
+
+
 \subsubsection{Lösungsansatz}
 Die Lösung für dieses Problem bietet Django selbst leider nicht an. Jedoch ist eine elegante Möglichkeit die Spezialisierung des Objektes über Reflection zu lösen. Dazu implementieren wir in den Basisklassen die Methode \textbf{subclass()}.\\
 Diese ermöglicht es für jede Subklasse der Basisklasse zu testen, ob das aktuelle Objekt eine Spezialisierung ist oder nicht, falls ja, wird ein neue spezialisierte Instanz erstellt und zurück gegeben.

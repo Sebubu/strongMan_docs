@@ -14,7 +14,7 @@ Die Applikation hat ein Uploadfeld um Schlüsselcontainer hinzuzufügen. Dabei m
 \subsubsection{Wichtige Implementationsmerkmale}
 \paragraph{Private Keys} Wie im Domain Model zu erkennen ist, hängt der Private Key immer an einem UserCertificate. Das Zertifikat muss somit immer vor dem Private Key geuploadet werden. Dies verhindert Private Key Leichen in der Datenbank und vereinfacht das Schlüsselhandling.
 
-\paragraph{Doppelte Einträge} Der CName ist normalerweise ein einfacher Eintrag wie www.raiffeisen.ch. In Ausnahmefällen kann der CName - oder auch andere Felder - auch eine Liste wie ['raiffeisen.ch', 'www.raiffeisen.ch'] sein. Die Liste wird in einen String umgewandelt und so dargestellt.
+\paragraph{Doppelte Einträge} Der CNAME ist normalerweise ein einfacher Eintrag wie www.raiffeisen.ch. In Ausnahmefällen kann der CNAME - oder auch andere Felder - auch eine Liste wie ['raiffeisen.ch', 'www.raiffeisen.ch'] sein. Die Liste wird in einen String umgewandelt und so dargestellt.
 
 \paragraph{Doppelte Zertifikate/Private Keys}
 Werden bestehende Zertifikate oder Private Keys nochmals geuploadet, erkennt die Zertifikatsverwaltung dies und verweigert den Upload. Das Matching wird anhand des Public Keys vorgenommen. Bei Zertifikaten wird der Public Key und die Version gematcht.

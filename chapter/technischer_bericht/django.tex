@@ -1,5 +1,5 @@
 \subsection{Einführung Django}
-Django \cite{django} ist ein Python Framework zur Webentwicklung. Projekte werden zur Strukturierung in Apps eingeteilt, die untereinander unabhängig sind. Apps können so gestaltet werden, dass man sie wiederverwenden kann.
+Django \cite{django} ist ein Python Framework zur Webentwicklung. Projekte werden zur Strukturierung in Apps eingeteilt, die hierarchisch aufeinander aufbauen. Apps sollten so gestaltet werden, dass man sie wiederverwenden kann.
 \paragraph{MVC Konzept}
 Django baut auf dem MVC Konzept auf, unterscheidet sich jedoch in der Namensgebung vom klassischen Aufbau. 
 \medskip
@@ -9,7 +9,7 @@ Django baut auf dem MVC Konzept auf, unterscheidet sich jedoch in der Namensgebu
     \hline    
     \rowcolor{lightblue}
 	klassisch & Django & Anmerkung \\ \hline
-	Model & Model & gleich wie allgemein üblich \\ \hline
+	Model & Model & Models sind gleich wie allgemein üblich \\ \hline
 	View & Templates & Views sind in Django Templates, diese sind nicht mehr als Vorlagen \\ \hline
 	Controller & Views & Der Controller wird zur View und dient als Schnittstelle für den Client \\ \hline
     \end{tabular}
