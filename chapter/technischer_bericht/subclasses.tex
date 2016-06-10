@@ -50,6 +50,7 @@ Ein Django Fremdschlüssel referenziert immer auf eine spezifische Klasse. Im Fa
 Das gleiche Problem ergibt sich, wenn anhand der ID aus einem Formular auf das spezifische Objekt zugegriffen werden muss.
 \\
 Dies könnte wie folgt aussehen. CaCertificateAuthentication ist eine Subklasse von Authentication.
+\newpage
 \medskip
 \begin{python}
     def check_instance(auth):
@@ -60,6 +61,9 @@ Dies könnte wie folgt aussehen. CaCertificateAuthentication ist eine Subklasse 
 \end{python}
 Die Funktion \textbf{check\_instance} macht entsprechende Instanzprüfungen.\\
 
+
+\subsubsection{Speichere Instanz von Subklasse}
+
 \begin{python}
     ca_auth = CaCertificateAuthentication()
     ca_auth.save()
@@ -67,16 +71,22 @@ Die Funktion \textbf{check\_instance} macht entsprechende Instanzprüfungen.\\
 \end{python}
 
 \begin{lstlisting}[style=BashInputStyle]
+    # Output
     is instance of Authentication: True
     is instance of CaCertificateAuthentication: True
 \end{lstlisting}    
 Erstellt ein  CaCertificateAuthentication Objekt und speichert es in der Datenbank ab. Wie an der Ausgabe ersichtlich ist, ist es vom Typ der Subklasse CaCertificateAuthentication.\\
+
+\medskip
+
+\subsubsection{Lade Objekt wieder}
 
 \begin{python}
     loaded_auth = Authentication.objects.get(id=ca_auth.id)
     check_instance(loaded_auth)
 \end{python}
 \begin{lstlisting}[style=BashInputStyle]
+    # Output
     is instance of Authentication: True
     is instance of CaCertificateAuthentication: False
 \end{lstlisting} 
@@ -110,7 +120,7 @@ class Authentication(models.Model):
         return self
 \end{python}
 \medskip
-Mit Hilfe dieser Erweiterung sieht das verbesserte obig Beispiel nun folgendermassen aus.
+Mithilfe dieser Erweiterung sieht das verbesserte obig Beispiel nun folgendermassen aus.
 \medskip
 \begin{python}
 def update(request, id):

@@ -22,27 +22,25 @@ class AboutViewsTests(TestCase):
 \end{python}
 
 \subsection{Continuous Integration (CI)}
-\subsubsection{Anforderungen}
+Der Aufbau der Continuous Integration Umgebung des strongMans ist nicht trivial und stellt folgede Anforderungen:
 \begin{itemize}
 	\item Aufbau von IPsec Tunnels zwischen mindesten zwei Rechnern
 	\item automatisierter Ablauf
 	\item geringe Einarbeitungszeit in Technologien
 	\item möglichst kostenfreie Dienste nutzen
 \end{itemize}
-\subsubsection{Tools}
+Um den Anforderungen gerecht zu werden setzten wir auf ein Zusammenspiel folgender Tools:
 \paragraph{GitHub} wird von uns als online Repository verwendet und wird mit dem Versionsverwaltungssystem Git eingesetzt. Weiter bietet es für andere Dienste WebHooks an. 
 \paragraph{Travis CI} wird als eigentlicher Continuous Integration Anbieter verwendet. Es ermöglicht automatisierte Builds und Tests. Travis CI ist für Projekte, welche auf GitHub gehostet werden, ausgelegt.
 
 \paragraph{Docker} Um die strongSwan Konfiguration direkt zu testen, wird docker-compose eingesetzt. Docker-compose gewährleistet mehrere Docker Container zu builden, ein Netzwerk untereinander und somit einen IPsec Tunnel aufzubauen. \\
-\decision{Toolstack CI}
-Um einen IPsec Tunnel aufzubauen nutzen wir zwei Docker Container mithilfe von docker-compose. Travis CI unterstützt docker-compose und lässt sich nahtlos mit GitHub kombinieren. Diese Technologien sind uns schon bekannt und werden kostenlos zur Verfügung gestellt.\\
 
+\subsubsection{Ablauf}
 \begin{figure}[H]
 \centering
 \includegraphics[width=420pt]{images/testing.png}
 \caption[Schematische Darstellung der Testumgebung]{Schematische Darstellung der Testumgebung}
 \end{figure}\medskip
-\subsubsection{Ablauf}
 \begin{enumerate}
 	\item git push, lokaler Code wird auf GitHub publiziert.
 	\item Travis CI wird durch WebHook notifiziert.
@@ -128,9 +126,9 @@ Erstellen Sie eine neue Verbindung zur HSR mit den gegebenen Daten. \\
 
 \begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
 \hline
-Preconditions: & User befindet sich auf der Startseite von strongMan eingeloggt. Connections und Certificates sind leer. Der System Administrator hat eine Anleitung zum Erstellen der Verbindung zur Verfügung gestellt. \\
+Preconditions: & User befindet sich eingeloggt auf der Startseite von strongMan. Connections und Certificates sind leer. Der System Administrator hat eine Anleitung zum Erstellen der Verbindung zur Verfügung gestellt. \\
 \hline
-Hilfsmittel: & Schritt für Schritt Anleitung mit Gateway, Username, Passwort, CA-Zertifikat, Identity \\
+Hilfsmittel: & Schritt für Schritt Anleitung mit Server, Username, Passwort, CA-Zertifikat, Identity \\
 \hline
 Artefakte: & User hat den Connections Bereich gefunden. \\
 & User hat den Add Button gefunden. \\
@@ -141,7 +139,7 @@ Artefakte: & User hat den Connections Bereich gefunden. \\
 
 
 \paragraph{Verbindung starten / stoppen}
-Starten Sie die Verbindung und stoppen Sie sie wieder. \\
+Starten Sie die Verbindung und stoppen Sie diese wieder. \\
 
 
 \begin{tabular}{ | p{0.14\textwidth} | p{0.77\textwidth} | }
@@ -181,16 +179,16 @@ Artefakte: & User erkennt den On/Off Button. \\
     \caption[Sekundäre Persona Administrator]{Sekundäre Persona Administrator}
 \end{figure}
 \end{minipage}
+\medskip
 
+Remo Stoop arbeitet wie Markus Egger im gleichen mittelgrossen Industrieunternehmen, welche Isolationsmatten herstellt. Er ist dort als System Administrator angestellt und verantwortlich für die Netzwerkinfrastruktur und der Netzwerksicherheit, inklusive dem Netzwerkzugriff von aussen.  Remo hat sich bewusst in Richtig Netzwerk weitergebildet. Nach seiner Lehre als Informatiker Systemtechnik hat er zwei fünf tägige Cisco Netzwerk Kurse besucht und ist seit dem netzwerktechnisch auf dem neusten Stand. Die symmetrischen und asymmetrischen Verschlüsslungstechniken kennt er oberflächlich aus einem Modul aus seiner Lehre.
 
-Remo Stoop arbeitet wie Markus Egger im gleichen mittelgrossen Industrieunternehmen, welche Isolationsmatten herstellt. Er ist dort als System Administrator angestellt und verantwortlich für die Netzwerkinfrastruktur und der Netzwerksicherheit, inklusive dem Netzwerkzugriff von aussen.  Remo hat sich bewusst in Richtig Netzwerk weitergebildet. Nach seiner Lehre als Informatiker Systemtechnik hat er zwei fünf tägige Cisco Netzwerk Kurse besucht und ist seit dem netzwerktechnisch auf dem neusten Stand. Verschlüsslungstechniken - symmetrische wie asymmetrische - kennt er oberflächlich aus einem Modul aus seiner Lehre.
-
-Auch Remo arbeitet gerne einen Tag in der Woche zuhause, sofern es seine Arbeit erlaubt. Neben seiner Familie ist seine Hauptbeschäftigung das Gamen mit Freunden und Raspberry Pi Bastelprojekte.
+Auch Remo arbeitet gerne einen Tag in der Woche zuhause, sofern es seine Arbeit erlaubt. Neben seiner Familie ist seine Hauptbeschäftigung das Gamen mit Freunden sowie Raspberry Pi Bastelprojekte.
 
 
 \subsubsection{Test Vorlage (erweitert User Tests)}
 
-Sie sind Systemadministrator der Industriefirma Techtronic AG und haben zuvor einen strongSwan VPN Gateway eingerichtet. Nun soll das erste Mal eine Verbindung von ausserhalb (genauer von Ihnen zuhause) in die Firma aufgebaut werden. Dazu stehen Ihnen Username, Passwort und Zertifikatsdateien zur Verfügung gestellt. Ihre Aufgabe ist es nun, die unten aufgeführten Tasks zu lösen.
+Sie sind Systemadministrator der Industriefirma Techtronic AG und haben zuvor einen strongSwan VPN Server eingerichtet. Nun soll das erste Mal eine Verbindung von ausserhalb (genauer von Ihnen zuhause) in die Firma aufgebaut werden. Dazu stehen Ihnen Username, Passwort und Zertifikatsdateien zur Verfügung gestellt. Ihre Aufgabe ist es nun, die unten aufgeführten Tasks zu lösen.
 
 \paragraph{Key Container hinzufügen}
 \begin{enumerate}
@@ -205,7 +203,7 @@ Sie sind Systemadministrator der Industriefirma Techtronic AG und haben zuvor ei
 \hline
 Preconditions: & User befindet sich auf der Startseite von strongMan. \\
 \hline
-Hilfsmittel: & Roadwarrior PKCS12 mit Passwort, Zertifikat mit Private Key \\
+Hilfsmittel: & Roadwarrior PKCS12 Container mit Passwort, Zertifikat mit Private Key \\
 \hline
 Artefakte: & User hat den Add Button gefunden. \\
 & User konnte den verschlüsselten PKCS12 Container hinzufügen. \\
@@ -218,17 +216,17 @@ Artefakte: & User hat den Add Button gefunden. \\
 
 
 \subsubsection{Fazit}
-Wir haben die Usability Tests mit 4 Personen durchgeführt. Die Administrator Tests haben zwei unbeteiligte HSR Studenten durchgeführt und die User Tests zwei User mit Büroerfahrung.
+Wir haben die Usability Tests mit vier Personen durchgeführt. Die Administrator Tests haben zwei unbeteiligte HSR Studenten durchgeführt und die User Tests zwei User mit Büroerfahrung.
 
 Die wichtigsten Erkenntnisse aus den Tests sind:
 \begin{itemize}
     \item Es braucht ein Text, der beschreibt, dass zuerst das Zertifikat und erst danach der Private Key geuploaded werden kann.
     \item Die State Spalte in der Connection Table ist nicht sortierbar.
-    \item Die Authentication method der Verbindung muss änderbar sein nach der Auswahl.
+    \item Der Verbindungstyp muss änderbar sein nach der Auswahl.
     \item Zertifikate müssen in der Verbindungskonfiguration hinzugefügt werden können.
     \item Beschriftung der Remove Buttons muss eindeutig sein. Private Key löscht keine Zertifikate.
-    \item Verbindung darf nicht löschbar sein, wenn aktiv
-    \item Diverese Verbesserungen an der Englischen Sprache nötig.
-    \item Die Anordnung der Buttons im Add-Certificate Model verwirrt.
+    \item Verbindung darf nicht löschbar sein, wenn sie aktiv ist.
+    \item Diverese Verbesserungen an der Englischen Sprache sind nötig.
+    \item Die Anordnung der Buttons im Add-Certificate Formular verwirrt.
     \item About Pages zeigt keine Infos.
 \end{itemize}

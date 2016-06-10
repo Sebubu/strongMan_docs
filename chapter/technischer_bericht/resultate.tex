@@ -23,7 +23,7 @@ Wurde ein VPN-Tunnel erfolgreich aufgebaut, werden Statusinformationen angezeigt
 \noindent\begin{minipage}[t]{0.5\textwidth}
 \vspace{0pt}
 \subsection{Zertifikatsverwaltung}
-Unter dem Reiter Certificates finde sich ein Zusammenstellung aller selbst erfassten Zertifikate und derer die von strongSwan verwaltet werden. Diese werden über die Vici-Schnittstelle geladen und auch in der Datenbank persisitiert. Es ist möglich nach Zertifikaten zu suche, diese zu sortieren und durch das Auswählen weitere Information anzuzeigen.
+Unter dem Reiter Certificates finde sich ein Zusammenstellung aller selbst erfassten Zertifikate und derer die von strongSwan verwaltet werden. Diese werden über die VICI-Schnittstelle geladen und auch in der Datenbank persisitiert. Es ist möglich nach Zertifikaten zu suche, diese zu sortieren und durch das Auswählen weitere Information anzuzeigen.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
@@ -37,7 +37,7 @@ Unter dem Reiter Certificates finde sich ein Zusammenstellung aller selbst erfas
 \newpage
 
 \subsection{Ausblick}
-strongMan implementiert nach Abschluss dieses Projekts Clientfunktionalitäten wie oben beschrieben. Ausbaumöglichkeiten gibt es in der nicht realisierten Kann Anforderung der Serverfunktionalität. Mit dieser Erweiterung soll es möglich sein, einen VPN Gateway zu konfigurieren und auch zu verwalten. Gerade die Verwaltung eines Gateways zieht aufwändigere Funktionalität bezüglich Security Associations Management, Visualiserung der Verbindungen, sowie Statistikinformationen mit sich.\\ 
+strongMan implementiert nach Abschluss dieses Projekts Clientfunktionalitäten wie oben beschrieben. Ausbaumöglichkeiten gibt es in der nicht realisierten Kann Anforderung der Serverfunktionalität. Mit dieser Erweiterung soll es möglich sein, einen VPN Server zu konfigurieren und auch zu verwalten. Gerade die Verwaltung eines Servers zieht aufwändigere Funktionalität bezüglich Security Associations Management, Visualiserung der Verbindungen, sowie Statistikinformationen mit sich.\\ 
 
 
 Wenn gewünscht kann das Benutzermanagement von derzeit einem Standardbenutzer auf eine belibige Anzahl ausgebaut werden. Diese Änderung ermöglicht die getrennte Verwaltung von Verbindungen in einem Multiusersystem.
@@ -53,8 +53,7 @@ Weiter ist derzeit strongMan auf wenigen Unix Distributionen lauffähig. Es kön
     \rowcolor{lightblue}
 	Ziel &  Bemerkung\\ \hline   
 	Implementation einer grafischen Management-Oberfläche mit Django für strongSwan
-    zur Konfiguration eines VPN Clients für folgende vier IKEv2 Authentisierungsmetho-
-    den:
+    zur Konfiguration eines VPN Clients für folgende vier IKEv2 Authentisierungsmethoden:
     \begin{enumerate}
         \item X.509 Zertifikat und privater RSA/ECDSA Schlüssel
         \item EAP mit Benutzername/Passwort
@@ -63,11 +62,11 @@ Weiter ist derzeit strongMan auf wenigen Unix Distributionen lauffähig. Es kön
     \end{enumerate}
 	& Die definierten Authentisierungsmethoden werden unterstützt und durch die Architektur der strongMan Applikation sind Erweiterungen möglich.  \\ \hline
 	Oberfläche zur Verwaltung von X.509 End Entity und CA Zertifikaten, sowie privater
-    RSA/ECDSA Schlüssel. & strongMan ermöglicht das Hinzufügen und Entfernen von Zertifikaten,  weiter ist das Filtern und Suchen möglich. Als zusätzliches Feature kann einem Zertifikat ein Nickname gesetzt werden, bei der Identifikation hilft.
+    RSA/ECDSA Schlüssel. & strongMan ermöglicht das Hinzufügen und Entfernen von Zertifikaten,  weiter ist das Filtern und Suchen möglich. Als zusätzliches Feature kann einem Zertifikat ein Nickname gesetzt werden, welcher bei der Identifikation hilft.
     \\ \hline
     Persistierung der Konfigurationsdaten in einer Datenbank. & Alle Konfigurationsdaten, sowie Zertifikate werden in der Datenbank gespeichert. Dabei wird standardmässig eine SQLite Datenbank verwendet, welche es ermöglicht ohne zusätzliche Konfiguration und Installation die Applikation zu verwenden. \\ \hline
     Verschlüsselte Ablage der RSA/ECDSA Authentisierungsschlüssel in der Datenbank. & Die schützenswerten Daten Privatekeys und strongSwan Secrets (Bsp. EAP Passwort) werden durch eine AES256 Verschlüsselung in der Datenbank persistiert. \\ \hline
-    Starten und Stoppen von konfigurierten VPN Verbindungen & Korrekt erfasste Verbindungen können über die Vici-Schnittstelle gestartet und gestopppt werden. \\ \hline
+    Starten und Stoppen von konfigurierten VPN Verbindungen & Korrekt erfasste Verbindungen können über die VICI-Schnittstelle gestartet und gestopppt werden. \\ \hline
     Darstellung von Statusinformation über aktive VPN Verbindungen & Informationen zu Local- und Remoteselectors, Traffic sowie Logs werden dargestellt. \\ \hline
     \textbf{Optional}: Oberfläche zur Konfiguration eines VPN Gateways & Die Erweiterung zur Gateway/Server Konfiguration wurde nicht implementiert. Gegen Ende des Projektes wurde entschieden, dass der Fokus auf die Clientseite gesetzt wird und dieser noch verbessert werden soll.   \\ \hline 
     \end{tabular}

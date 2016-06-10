@@ -1,7 +1,7 @@
 \begin{landscape}
 \subsubsection{Meilensteine}
 \begin{enumerate}
-	\item MS1 Techniken evaluiert (Django, Crypto-Library, Vici-Schnittstelle)
+	\item MS1 Techniken evaluiert (Django, Crypto-Library, VICI-Schnittstelle)
 	\item MS2 Lauffähiger Prototyp
 	\item MS3 VPN-Tunnel erfass- und änderbar
 	\item MS4 VPN-Tunnel initialisier- und terminerbar
@@ -10,7 +10,7 @@
 \subsubsection{Zeitplanung}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=240mm]{images/gantt_new.PNG}
+		\includegraphics[width=220mm]{images/gantt_new.PNG}
 		\caption{Gantt Chart}
 	\end{figure}
 \newpage
@@ -23,18 +23,18 @@ Um den Problemen, die während des Projekts auftreten können, entgegenzuwirken,
     \hline    
     \rowcolor{lightblue}
     Nr & Titel & Beschreibung & maximaler Schaden & Eintrittswahr-scheinlichkeit & Gewichteter Schaden & Vorbeugung & Verhalten beim Eintreten \\ \hline
-	R1 & Python Crypto Library & Die evaluierte Crypto Library für die Zertifikaterkennung ist fehlerhaft oder ungenügend. & 50h & 20\% & 10h & Evaluation Library & Zertifikate werden nicht mehr ausgelesen, sondern nur noch stupid importiert. \\ \hline
-	R2 & Komplexität Vici-Schnittstelle & Die Python Vici Schnittstelle deckt sich nicht mit der swanControl Notation. Dadurch kann massiv mehr Aufwand während der Implemenation entstehen. & 50h & 40\% & 20h & Die Vici Schnittstelle muss mit dem Prototypen gut durchgetestet werden, um Fehler möglichst früh zu finden. & Kontakt mit Tobias Brunner aufnehmen \\ \hline
-	R3 & Einrichten automatisierte Testumgebung & Aufbau und Einrichten einer Integrationtestumgebung, welche es erlaubt Ipsec Tunnels zwischen mehreren Rechnern aufzubauen. & 60h & 60\% & 36h & Informationen zu CI Anbieter sammeln & Eigene Infrastruktur verwenden. \\ \hline
+	R1 & Python Crypto Library & Die evaluierte Crypto Library für die Zertifikaterkennung ist fehlerhaft oder ungenügend. & 50h & 20\% & 10h & Evaluation Library & Zertifikate werden nicht mehr ausgelesen, sondern nur noch simpel importiert. \\ \hline
+	R2 & Komplexität VICI-Schnittstelle & Die Python VICI-Schnittstelle deckt sich nicht mit der swanControl Notation. Dadurch kann massiv mehr Aufwand während der Implemenation entstehen. & 50h & 40\% & 20h & Die VICI-Schnittstelle muss mit dem Prototypen gut durchgetestet werden, um Fehler möglichst früh zu finden. & Kontakt mit Tobias Brunner aufnehmen \\ \hline
+	R3 & Einrichten automatisierte Testumgebung & Aufbau und Einrichten einer Integrationtestumgebung, welche es erlaubt IPsec Tunnels zwischen mehreren Rechnern aufzubauen. & 60h & 60\% & 36h & Informationen zu CI Anbieter sammeln & Eigene Infrastruktur verwenden. \\ \hline
     \end{tabular}
     \caption[Risiken]{Risiken - Die technischen Risiken wurden zu Beginn des Projektes, wie in der Tabelle ersichtlich, definiert.}
 \end{table}
 \end{landscape}
 
 \subsubsection{Auswertung}
-\paragraph{R1 Python Crypto Library} Mit Hilfe der Evaluation der Crypto Library konnte dieses Risiko aus dem Weg geräumt werden. Der Aufwand blieb im erwarteten Rahmen und mit \textbf{oscrypto} wurde eine passende pure Python Bibliothek gefunden werden.
+\paragraph{R1 Python Crypto Library} Mithilfe der Evaluation der Crypto Library konnte dieses Risiko aus dem Weg geräumt werden. Der Aufwand blieb im erwarteten Rahmen und mit \textbf{oscrypto} wurde eine passende pure Python Bibliothek gefunden werden.
 
-\paragraph{R2 Komplexität Vici-Schnittstelle} Das Zusammenspiel zwischen Python/Django funktionierte nahtlos und wie in der Dokumentation beschrieben. Problematischer und zeitintensiver war jedoch das korrekte Konfigurieren von strongSwan. Erst dank dem Einsatz von docker-compose und der Hilfe durch Tobias Brunner konnte dieses Problem aus der Welt geschafft werden.
+\paragraph{R2 Komplexität VICI-Schnittstelle} Das Zusammenspiel zwischen Python/Django funktionierte nahtlos und wie in der Dokumentation beschrieben. Problematischer und zeitintensiver war jedoch das korrekte Konfigurieren von strongSwan. Erst dank dem Einsatz von docker-compose und der Hilfe durch Tobias Brunner konnte dieses Problem aus der Welt geschafft werden.
 
 \paragraph{R3 Einrichten automatisierte Testumgebung}
 Docker-compose legte die Grundsteine, welche es uns ermöglichten mehrere Rechner für die Testumgebung zu nutzen. Da der uns wohl bekannte CI Anbieter Travis dies zudem noch unterstützte, wurden automatische Integrationtest möglich. Das Finden einer passenden Lösung war ohne grössere Komplikationen möglich. Mehr Aufwand als erwartet, gab jedoch die Konfiguration der Docker-Container. Womit dieses Risiko teils eintrat.\\
@@ -45,11 +45,11 @@ Docker-compose legte die Grundsteine, welche es uns ermöglichten mehrere Rechne
     \hline    
     \rowcolor{lightblue}
 	Nr & Titel & Schaden \\ \hline   
-	R1 & Python Crypto Library & 0h \\ \hline
-	R2 & Komplexität VICI-Schnittstelle & 18h \\ \hline
-	R3 & Einrichten automatisierte Testumgebung & 32h \\ \hline
+	R1 & Python Crypto Library & 0 Stunden \\ \hline
+	R2 & Komplexität VICI-Schnittstelle & 18 Stunden \\ \hline
+	R3 & Einrichten automatisierte Testumgebung & 32 Stunden \\ \hline
 	\rowcolor{lightblue}
-	Total &  & 50h \\ \hline
+	Total &  & 50 Stunden \\ \hline
     \end{tabular}
     \caption[Risikoauswertung]{Risikoauswertung}
 \end{table}

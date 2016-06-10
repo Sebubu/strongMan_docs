@@ -1,6 +1,6 @@
 \subsection{Webserver}
 Django ist ein Webframework und muss somit mit einem Webserver betrieben werden.
-Im Entwicklungsmodus kann der Django interne Webserver verwendet werden:
+Im Entwicklungsmodus kann der Django interne Webserver verwendet werden, dieser wird folgendermassen gestartet:
 \begin{lstlisting}[style=BashInputStyle]
 	 python manage.py runserver --settings=strongMan.settings.local
 \end{lstlisting}
@@ -15,9 +15,8 @@ Jedes Djangoprojekt enhält standardmässig eine WSGI \cite{wsgi} Schnittstelle 
 
 \decision{Gunicorn - Statische Dateien} In diesem Projekt verwenden wir gunicorn \cite{gunicorn}. Gunicorn oder auch 'Green Unicorn' ist ein Python WSGI HTTP Server für Unix. Er verarbeitet die Webrequest die Django betreffen. Normalerweise verarbeitet Gunicorn aus Performancegründen keine statischen Daten wie Javascript, CSS, Bilder. Da es sich hier aber um eine Einzeluserapplikation handelt, haben wir uns trotzdem dazu entschieden, auch die statische Daten über Gunicorn auszuliefern. Ansonsten müsste ein richtiger Webserver wie Apache oder Nginx installiert und konfiguriert werden.
 
-Gunicorn wird einfach via pip installiert und kann danach im Terminal verwendet werden.\\
+Gunicorn wird einfach via PIP installiert und kann danach im Terminal verwendet werden.\\
 
-\newpage
 
 Die Datei run.py im Hauptverzeichnis des Projekts startet den Gunicorn Server entsprechend in der Produktionsumgebung:
 
